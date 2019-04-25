@@ -22,7 +22,7 @@
                             </div>
                             <div class="right-text-con">
                                 <p class="name">会员数</p>
-                                <p><span class="color-org">88</span>数据<span class="iconfont">&#xe628;</span></p>
+                                <p><span class="color-org">{{$orders_info['unum']}}</span>数据<span class="iconfont">&#xe628;</span></p>
                             </div>
                         </a>
                     </li>
@@ -32,8 +32,8 @@
                                 <span class="iconfont">&#xe602;</span>
                             </div>
                             <div class="right-text-con">
-                                <p class="name">文章数</p>
-                                <p><span class="color-blue">88</span>数据<span class="iconfont">&#xe628;</span></p>
+                                <p class="name">今日订单数</p>
+                                <p><span class="color-blue">{{$orders_info['day']}}</span>数据<span class="iconfont">&#xe628;</span></p>
                             </div>
                         </a>
                     </li>
@@ -43,8 +43,8 @@
                                 <span class="iconfont">&#xe605;</span>
                             </div>
                             <div class="right-text-con">
-                                <p class="name">评论数</p>
-                                <p><span class="color-green">88</span>数据<span class="iconfont">&#xe60f;</span></p>
+                                <p class="name">订单总数</p>
+                                <p><span class="color-green">{{$orders_info['total']}}</span>数据<span class="iconfont">&#xe60f;</span></p>
                             </div>
                         </a>
                     </li>
