@@ -19,6 +19,16 @@ if (!function_exists('is_config_id')) {
     }
 }
 /**
+* 验证容量是否规范
+*/
+function is_validate_capacity($capacity){
+    $isMatched = preg_match('/(^[1-9](\d+)?(\.\d{1,2})?$)|(^(0){1}$)|(^\d\.\d(\d)?$)/',$capacity,$matches);
+    if(!$isMatched){
+        return false;
+    }
+    return true;
+}
+/**
 *   将中文转成成英文的字符长度
 */
 function getEnByCnByString($string, $length=10){
