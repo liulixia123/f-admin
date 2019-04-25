@@ -32,3 +32,5 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
     Route::resource('/roles',           'RoleController');
     Route::resource('/permissions',     'PermissionController');
 });
+//前台首页
+Route::get('/home',                   'IndexController@index');
