@@ -38,8 +38,8 @@ class HomeController extends BaseController
     /**
      * 欢迎首页
      */
-    public function welcome(){
-        return view('admin.welcome',['sysinfo'=>$this->getSysInfo()]);
+    public function welcome(){        
+        return view('admin.welcome',['sysinfo'=>$this->getSysInfo(),'orders_info'=>$this->getorderInfo()]);
     }
     /**
      * 排序
@@ -66,5 +66,14 @@ class HomeController extends BaseController
         $mysqlinfo = DB::select("SELECT VERSION() as version");
         $sys_info['mysql_version']  = $mysqlinfo[0]->version;
         return $sys_info;
+    }
+    /**
+    * 获取订单信息
+    */
+    protected function getorderInfo(){
+        $orders_info['unum'] = 99;
+        $orders_info['day'] = 8;
+        $orders_info['total'] = 1000;
+        return $orders_info;
     }
 }
