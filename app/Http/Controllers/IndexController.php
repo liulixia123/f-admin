@@ -17,6 +17,6 @@ class IndexController extends Controller
 	 * @return [type] [description]
 	 */
 	public function index(){
-		return "hello world";
+		return view('index.index');
 	}
 }
