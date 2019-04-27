@@ -1,0 +1,4 @@
+数据迁移
+php artisan make:migration create_application_table
+
+php artisan migrate

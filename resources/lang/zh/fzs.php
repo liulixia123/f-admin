@@ -52,7 +52,13 @@ return [
     'types' => [
         'notdel'               =>    '该机型不可以删除',
         'notedit'              =>    '该机型不可以编辑',
-        'del_type'       =>    '删除机型',
-        'handle_type'    =>    '操作机型',
+        'del_type'             =>    '删除机型',
+        'handle_type'          =>    '操作机型',
+    ],
+    'games' => [
+        'notdel'               =>    '该游戏不可以删除',
+        'notedit'              =>    '该游戏不可以编辑',
+        'del_game'             =>    '删除游戏',
+        'handle_game'          =>    '操作游戏',
     ],
 ];

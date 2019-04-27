@@ -81,6 +81,22 @@ class StoreRequest extends FormRequest
                     $rules['type_name']  = 'required|between:2,12|unique:types,type_name';                    
                 }                
                 break;
+            case '/games':
+                if($rid = request()->input('id')){
+                    $rules['game_name'] = 'required|between:2,30'.$rid;                   
+
+                }else{
+                    $rules['game_name']  = 'required|between:2,30';                    
+                }                
+                break;
+            case '/orders':
+                if($rid = request()->input('id')){
+                    $rules['mobile'] = 'required'.$rid;                   
+
+                }else{
+                    $rules['mobile']  = 'required';                    
+                }                
+                break;
             case '/saveinfo/1':
                 $rules['useremail']  = 'required|email|unique:admin_users,email,'.request()->input('id');
                 $rules['usertel']  = 'required|numeric';

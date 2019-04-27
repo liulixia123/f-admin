@@ -31,7 +31,15 @@ return [
     'permission_table_cannot_manage_ids'    => '1,2,3,4,5,6,7,8,9',
 
     //types
-    'type_table_cannot_manage_ids'    => '1,2',
+    'type'                                  => 'App\Models\Type',
+    'type_table_cannot_manage_ids'          => '1,2',
+    'type_foreign_key'                      => 'type_id',
+
+    //games
+    'game'                            => 'App\Models\Game',
+    'game_type_table'                       =>'game_type',
+    'game_table_cannot_manage_ids'          => '1,2',
+    'game_foreign_key'                      => 'game_id',               
 
     //menu
     'menu'                                  => 'App\Models\Menu',

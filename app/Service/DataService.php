@@ -198,7 +198,7 @@ class DataService{
                         $model->type_name = $inputs['type_name'];
                         $model->card_type = $inputs['card_type'];
                         if($inputs['id']){
-                            if (is_config_id($inputs['id'], "admin.type_table_cannot_manage_ids", false))return ['status'=>0,'msg'=>trans('fzs.menus.notedit')];
+                            if (is_config_id($inputs['id'], "admin.type_table_cannot_manage_ids", false))return ['status'=>0,'msg'=>trans('fzs.types.notedit')];
                             $model->exists = true;
                             $model->id = $inputs['id'];
                         }
@@ -206,6 +206,46 @@ class DataService{
                             if (!$model->save()) {
                                 return ['status'=>0,'msg'=>trans('fzs.common.fail')];
                             }
+                        }catch (\Exception $e){
+                            return ['status'=>0,'msg'=>trans('fzs.common.fail')];
+                        }
+                        return ['status'=>1,'msg'=>trans('fzs.common.success')];
+                        break;
+
+                    case 'delete':
+                        $model->id = $inputs['id'];
+                        $model->status = 0;
+                        $model->exists = true;
+                        if($model->save())return ['status'=>1,'msg'=>trans('fzs.common.success')];
+                        else return ['status'=>0,'msg'=>trans('fzs.common.fail')];
+                        break;
+                    default:
+                        return ['status'=>0,'msg'=>trans('fzs.common.wrong')];
+                }
+                break;
+            case 'games':
+                switch ($kind[1]){
+                    case 'add_or_update':
+                        $model->game_name = $inputs['game_name'];
+                        $model->number = $inputs['number'];
+                        $model->size_range = $inputs['size_range'];
+                        $model->language = $inputs['language'];                        
+                        if($inputs['id']){
+                            if (is_config_id($inputs['id'], "admin.game_table_cannot_manage_ids", false))return ['status'=>0,'msg'=>trans('fzs.games.notedit')];
+                            $model->exists = true;
+                            $model->id = $inputs['id'];
+                        }
+                        try{
+                            if (!$model->save()) {
+                                return ['status'=>0,'msg'=>trans('fzs.common.fail')];
+                            }
+                            $types = $inputs['game_type'];
+                            if (!empty($types)) {
+                                foreach ($types as $k => $type) {
+                                    if (empty($type)) unset($types[$k]);
+                                }
+                            }
+                            $model->saveTypes($types);
                         }catch (\Exception $e){
                             return ['status'=>0,'msg'=>trans('fzs.common.fail')];
                         }
