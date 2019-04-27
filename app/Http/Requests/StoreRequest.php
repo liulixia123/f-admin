@@ -73,6 +73,14 @@ class StoreRequest extends FormRequest
                 $rules['permission_remark'] = 'required|alpha|between:2,30';
                 $rules['permission_roles'] = 'required|array';
                 break;
+            case '/types':
+                if($rid = request()->input('id')){
+                    $rules['type_name'] = 'required|between:2,12|unique:types,type_name,'.$rid;                   
+
+                }else{
+                    $rules['type_name']  = 'required|between:2,12|unique:types,type_name';                    
+                }                
+                break;
             case '/saveinfo/1':
                 $rules['useremail']  = 'required|email|unique:admin_users,email,'.request()->input('id');
                 $rules['usertel']  = 'required|numeric';

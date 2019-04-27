@@ -98,6 +98,54 @@ class AdminMenusTableSeeder extends Seeder
                     'created_at'    => date('Y-m-d H:i:s',time()),
                     'updated_at'    => date('Y-m-d H:i:s',time()),
                 ),
+            7 =>
+                array (
+                    'id'            => 8,
+                    'parent_id'     => 0,
+                    'order'         => 1,
+                    'title'         => '内容管理',
+                    'icon'          => '&#xe621;',
+                    'uri'           => '/types',
+                    'routes'        => 'url:/types',
+                    'created_at'    => date('Y-m-d H:i:s',time()),
+                    'updated_at'    => date('Y-m-d H:i:s',time()),
+                ),
+            8 =>
+                array (
+                    'id'            => 9,
+                    'parent_id'     => 8,
+                    'order'         => 3,
+                    'title'         => '机型列表',
+                    'icon'          => '&#xe621;',
+                    'uri'           => '/types',
+                    'routes'        => 'url:/types',
+                    'created_at'    => date('Y-m-d H:i:s',time()),
+                    'updated_at'    => date('Y-m-d H:i:s',time()),
+                ),
+            9 =>
+                array (
+                    'id'            => 10,
+                    'parent_id'     => 8,
+                    'order'         => 4,
+                    'title'         => '游戏列表',
+                    'icon'          => '&#xe621;',
+                    'uri'           => '/games',
+                    'routes'        => 'url:/games',
+                    'created_at'    => date('Y-m-d H:i:s',time()),
+                    'updated_at'    => date('Y-m-d H:i:s',time()),
+                ),
+            10 =>
+                array (
+                    'id'            => 11,
+                    'parent_id'     => 8,
+                    'order'         => 5,
+                    'title'         => '订单管理',
+                    'icon'          => '&#xe621;',
+                    'uri'           => '/orders',
+                    'routes'        => 'url:/orders',
+                    'created_at'    => date('Y-m-d H:i:s',time()),
+                    'updated_at'    => date('Y-m-d H:i:s',time()),
+                ),
             )
         );
     }

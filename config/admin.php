@@ -30,6 +30,9 @@ return [
     'permission_foreign_key'                => 'permission_id',
     'permission_table_cannot_manage_ids'    => '1,2,3,4,5,6,7,8,9',
 
+    //types
+    'type_table_cannot_manage_ids'    => '1,2',
+
     //menu
     'menu'                                  => 'App\Models\Menu',
     'menu_table'                            => 'admin_menus',

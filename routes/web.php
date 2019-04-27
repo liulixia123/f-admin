@@ -31,6 +31,9 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
     Route::post('/saveinfo/{type}',     'UserController@saveInfo');
     Route::resource('/roles',           'RoleController');
     Route::resource('/permissions',     'PermissionController');
+    Route::resource('/types',           'TypesController');
+    Route::resource('/games',     'GamesController');
+    Route::resource('/orders',     'OrdersController');
 });
 //前台首页
 Route::get('/home',                   'IndexController@index');

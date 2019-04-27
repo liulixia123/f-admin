@@ -2142,3 +2142,16 @@
     margin-left: 80px;
   }
 }
+/*---add----*/
+.min-layui-input{
+  width: 10%;
+  padding-left: 10px;
+  height: 38px;
+  line-height: 38px;  
+  border: 1px solid #e6e6e6;
+  background-color: #fff;
+  border-radius: 2px;
+}
+.min-layui-input:hover{
+  border-color: #D2D2D2!important;
+}

@@ -49,4 +49,10 @@ return [
         'del_permission'       =>    '删除权限',
         'handle_permission'    =>    '操作权限',
     ],
+    'types' => [
+        'notdel'               =>    '该机型不可以删除',
+        'notedit'              =>    '该机型不可以编辑',
+        'del_type'       =>    '删除机型',
+        'handle_type'    =>    '操作机型',
+    ],
 ];

@@ -1,7 +1,7 @@
 @section('title', '机型列表')
 @section('header')
     <div class="layui-inline">
-    <button class="layui-btn layui-btn-small layui-btn-normal addBtn" data-desc="添加权限" data-url="{{url('/permissions/0/edit')}}"><i class="layui-icon">&#xe654;</i></button>
+    <button class="layui-btn layui-btn-small layui-btn-normal addBtn" data-desc="添加机型" data-url="{{url('/types/0/edit')}}"><i class="layui-icon">&#xe654;</i></button>
     <button class="layui-btn layui-btn-small layui-btn-warm freshBtn"><i class="layui-icon">&#x1002;</i></button>
     </div>
 @endsection
@@ -19,9 +19,8 @@
         <thead>
         <tr>
             <th class="hidden-xs">ID</th>
-            <th class="hidden-xs">机型标识</th>
             <th class="hidden-xs">机型名称</th>
-            <th>机型描述</th>
+            <th class="hidden-xs">容量大小区间</th>            
             <th class="hidden-xs">创建时间</th>
             <th class="hidden-xs">修改时间</th>
             <th>操作</th>
@@ -31,15 +30,14 @@
         @foreach($list as $info)
             <tr>
                 <td class="hidden-xs">{{$info['id']}}</td>
-                <td class="hidden-xs">{{$info['name']}}</td>
-                <td class="hidden-xs">{{$info['display_name']}}</td>
-                <td>{{$info['description']}}</td>
+                <td class="hidden-xs">{{$info['type_name']}}</td>
+                <td class="hidden-xs">{{$info['card_type']}}</td>                
                 <td class="hidden-xs">{{$info['created_at']}}</td>
                 <td class="hidden-xs">{{$info['updated_at']}}</td>
                 <td>
                     <div class="layui-inline">
-                        <button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['id']}}" data-desc="修改权限" data-url="{{url('/permissions/'. $info['id'] .'/edit')}}"><i class="layui-icon">&#xe642;</i></button>
-                        <button class="layui-btn layui-btn-small layui-btn-danger del-btn" data-id="{{$info['id']}}" data-url="{{url('/permissions/'.$info['id'])}}"><i class="layui-icon">&#xe640;</i></button>
+                        <button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['id']}}" data-desc="修改机型" data-url="{{url('/types/'. $info['id'] .'/edit')}}"><i class="layui-icon">&#xe642;</i></button>
+                        <button class="layui-btn layui-btn-small layui-btn-danger del-btn" data-id="{{$info['id']}}" data-url="{{url('/types/'.$info['id'])}}"><i class="layui-icon">&#xe640;</i></button>
                     </div>
                 </td>
             </tr>
