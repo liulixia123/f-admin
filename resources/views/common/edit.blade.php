@@ -8,14 +8,16 @@
     <title>@yield('title') | {{ Config::get('app.name') }}</title>
     <link rel="stylesheet" type="text/css" href="/static/admin/layui/css/layui.css" />
     <link rel="stylesheet" type="text/css" href="/static/admin/css/admin.css" />
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/selectFilter.css" />
     <script src="/static/admin/layui/layui.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/admin/js/common.js" type="text/javascript" charset="utf-8"></script>
     <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/static/admin/js/selectFilter.js" type="text/javascript" charset="utf-8"></script>
 
 </head>
 <body>
 <div class="wrap-container">
-    <form class="layui-form" style="width: 90%;padding-top: 20px;">
+    <form class="layui-form" style="width: 100%;padding-top: 20px;padding-right: 10px;">
         {{ csrf_field() }}
         @yield('content')
         <div class="layui-form-item">

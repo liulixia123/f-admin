@@ -22,6 +22,19 @@
     </div>
 
     <div class="layui-form-item">
+    <div class="layui-inline">
+      <label class="layui-form-label">容量单位：</label>
+      <div class="layui-input-block">     
+        <select name="danwei">           
+            <option value="M" {{isset($info['danwei'])&&$info['danwei']=='M'?'selected':''}}>MB</option>
+            <option value="G" {{isset($info['danwei'])&&$info['danwei']=='G'?'selected':''}}>GB</option>
+            <option value="T" {{isset($info['danwei'])&&$info['danwei']=='T'?'selected':''}}>TB</option>
+        </select>
+    </div>
+    </div>
+    </div>
+
+    <div class="layui-form-item">
         <label class="layui-form-label">语言：</label>
         <div class="layui-input-block">
             <input type="text" value="{{$info['language'] or ''}}" name="language" required lay-verify="language" placeholder="请输入2到12位汉字" autocomplete="off" class="layui-input">
@@ -59,7 +72,8 @@
                 if(chk_value.length==0){
                     layer.msg('至少选择一个所属游戏机型',{shift: 6,icon:5});
                     return false;
-                }                
+                }  
+                console.log($('form').serialize());             
                 $.ajax({
                     url:"{{url('/games')}}",
                     data:$('form').serialize(),

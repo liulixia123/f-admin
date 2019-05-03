@@ -2144,8 +2144,8 @@
 }
 /*---add----*/
 .min-layui-input{
-  width: 10%;
-  padding-left: 10px;
+  width: 20%;
+  padding-left: 6px;
   height: 38px;
   line-height: 38px;  
   border: 1px solid #e6e6e6;
@@ -2154,4 +2154,40 @@
 }
 .min-layui-input:hover{
   border-color: #D2D2D2!important;
+}
+.spanempty{ 
+  margin-top: 5px;
+  float: left;
+}
+.selectempty{
+  width: 18%;
+}
+.spanbutton{
+  height: 30px;
+line-height: 30px;
+padding: 0 6px;
+font-size: 17px;
+background-color: #1E9FFF;
+border: none;
+border-radius: 2px;
+cursor: pointer;
+opacity: .9;
+}
+.selectdiv{
+  display: block ! important;
+}
+
+.types_item {
+  display: inline;
+  width: 15%;
+  height: 32px;
+  position: absolute;
+
+}
+.inputout{
+  width: 32%;
+  height:38px;
+  padding: 5px;
+  border: 1px solid #e6e6e6;
+  margin-bottom: 5px;
 }

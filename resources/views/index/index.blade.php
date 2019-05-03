@@ -1,164 +1,287 @@
-<!DOCTYPE html>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title>网站首页</title>
-    <link rel="stylesheet" type="text/css" href="static/admin/layui/css/layui.css"/>
-    <link rel="stylesheet" type="text/css" href="static/admin/css/admin.css"/>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=5.0" charset="UTF-8">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<title>游戏前台首页</title>
+		<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdn.bootcss.com/layer/3.1.0/layer.js"></script>
+		
+		<style type="text/css">
+     .cardtd .gamenametd{
+        text-align:left;padding-left:15px;
+     }
+     #cardtype{
+        height:20px;width:20px;
+     }
+     .spantd{
+      color: #FF0000;font-size: 18px;
+     }
+     .gametd,.language,.size_range{
+      text-align:center;
+     }
+     .gamebox{
+      height:20px;width:20px;
+     }
+<!--
+.STYLE1 {
+	color: #000000;
+	font-size: 8px;
+	font-weight: bold;
+}
+.STYLE2 {
+	color: #ff0000;
+	font-weight: bold;
+}
+-->
+</style>
 </head>
 <body>
-<div class="wrap-container welcome-container">
-    <header class="header">
-        <table width="100%" border="0" align="left" cellpadding="0" style="margin:0 auto;" cellspacing="1">
-        <tr>
-        <td width="60%" style="text-align:left;padding-left:5px;"><span class="STYLE1">卡片实际容量:<span id="mycardrl">0</span></span></td>
-        <td rowspan="3" style="text-align:center;">
-            
-            </td>
-        </tr>
-        <tr>
-        <td style="text-align:left;padding-left:5px;"><span class="STYLE1">已选游戏总容量:<span id="selrlsum">0</span></span></td>
-        </tr>
-        <tr>
-        <td style="text-align:left;padding-left:5px;"><span class="STYLE1">卡片剩余容量:<span id="havecardrl">0</span></span></td>
-        </tr>
-        </table>
-    </header>   
-    <div class="row">
-        <div class="welcome-left-container col-lg-9">
-            <div class="data-show">
-               <div class="layui-form-item">
-                    <label class="layui-form-label">请选择游戏机型：</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="types" value="PSV" title="PSV">                              
-                        <input type="radio" name="types" value="MP4" title="MP4">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">请选择卡片类型：</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="cardtype" value="350.0" title="PSV">                              
-                        <input type="radio" name="cardtype" value="7" title="MP4">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">请选择游戏：</label>
-                    <div class="layui-input-block permission">
-                        <input type="checkbox" name="game_list[]" value="0.19" lay-skin="primary" title="暗黑">
-                        <input type="checkbox" name="game_list[]" value="0.38" lay-skin="primary" title="暗黑">
-                        <input type="checkbox" name="game_list[]" value="1.2" lay-skin="primary" title="暗黑">                         
-                    </div>
-                </div>
-            </div>
-        
-      
-        </div>
-        <table class="layui-table" lay-skin="line">
-        <colgroup>
-            <col width="50">
-            <col class="hidden-xs" width="50">
-            <col class="hidden-xs" width="100">
-            <col class="hidden-xs" width="100">
-            <col>
-            <col width="130">
-        </colgroup>
-        <thead>
-        <tr>
-            <th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose"></th>
-            <th class="hidden-xs">编号</th>
-            <th class="hidden-xs">名称</th>
-            <th class="hidden-xs">容量</th>
-        </tr>
-        </thead>
-        <tbody>
-        
-            <tr id='node-' class="parent collapsed">
-                <td><input type="checkbox" name="" lay-skin="primary" data-id=""></td>
-                <td class="hidden-xs"></td>
-                <td class="hidden-xs"><input type="number" name="title" autocomplete="off" class="layui-input" value="" data-id="" data-url="" onchange=></td>
-                <td class="hidden-xs">Admin</td>
+	<div class="wrapper">
+		<!--页头-->
+		<header class="header">
+			<table width="100%" border="0" align="left" cellpadding="0" style="margin:0 auto;" cellspacing="1">
+			<tr>
+			<td width="60%" style="text-align:left;padding-left:5px;"><span class="STYLE1">卡片实际容量:<span id="mycardrl">0</span></span></td>
+			<td rowspan="3" style="text-align:center;">
+				<button class="BigBtn2" id="selover" onclick="order()">选好提交</button>
+				<input id="typeid" type="hidden" value=""/>
+				<input id="card" type="hidden" value=""/>
+				<input id="gameid" type="hidden" value=""/>
+				</td>
+			</tr>
+			<tr>
+			<td style="text-align:left;padding-left:5px;"><span class="STYLE1">已选游戏总容量:<span id="selrlsum">0</span></span></td>
+			</tr>
+			<tr>
+			<td style="text-align:left;padding-left:5px;"><span class="STYLE1">卡片剩余容量:<span id="havecardrl">0</span></span></td>
+			</tr>
+			</table>
+		</header>				
+		<section class="main" id="groupForm">
+			<div class="DeInfo_Inpet DeInfo_Inpet2">
+				<div style="width:100%; height:95px; left:0;top:0;">
+          <table width="100%" border="0" align="left" cellpadding="0" style="margin:0 auto;" cellspacing="1" bgcolor="#C4D8ED">
+          	<tr>
+          	<td style="text-align:left;padding-left:5px;" colspan="2">
+          	<span style="color: #FF0000;font-size: 18px;">请先选择游戏机型:</span></td></tr>
+          	<tr>
+              
+              <td style="text-align:left;padding-left:15px;" colspan="2">
+              @foreach($typelist as $tlist)  
+              <input id="machtype" name="machtype" type="radio" value="{{$tlist['type_name']}}" onchange="typeChange('{{$tlist['type_name']}}-{{$tlist['id']}}')"  style="height:20px;width:20px;" {{(isset($tlist['id'])&&$tlist['id'] == $id) ? 'checked' : ''}}/>
+              <span style="color: #FF0000;font-size: 18px;">{{$tlist['type_name']}}</span>
+              @endforeach
+              	</td>
+              </tr>
+
+          </table>					
+          <table id="tabcardtype" width="100%" border="0" align="left" cellpadding="0" style="margin:0 auto;" cellspacing="1" bgcolor="#C4D8ED">
+          	<tr id = 'cardtypetr'>
+            	<td style="text-align:left;padding-left:5px;" colspan="2">
+            	<span style="color: #FF0000;font-size: 18px;">请先选择卡片类型:</span></td>
             </tr>
-         
-        </tbody>
-    </table>
-        <div class="welcome-edge col-lg-3">
-            <!--联系-->
-            <div class="panel panel-default contact-panel">
-                <div class="panel-header">联系我</div>
-                <div class="panel-body">
-                    <p>QQ：1255896643</p>
-                    <p>E-mail:1255896643@qq.com</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<script src="static/admin/layui/layui.js" type="text/javascript" charset="utf-8"></script>
-<script src="static/admin/lib/echarts/echarts.js"></script>
-<script>
-        layui.use(['form','jquery','laypage', 'layer'], function() {
-            var form = layui.form(),
-                $ = layui.jquery;
-            form.render();
-            var layer = layui.layer;
             
-            form.on('submit(formDemo)', function(data) {
-                var chk_value =[];
-                
-                var typeval = $('input[name="types"]:checked').val()
-                var cardval = $('input[name="cardtype"]:checked').val()
-                if(!typeval){
-                    layer.msg('至少选择一个游戏机型',{shift: 6,icon:5});
-                    return false;
-                }
-                if(!cardval){
-                    layer.msg('至少选择一个卡片类型',{shift: 6,icon:5});
-                    return false;
-                }
-                $('input[name="game_list[]"]:checked').each(function(){
-                    chk_value.push($(this).val());
-                    if($(this).val()==1)is_have_admin--;
-                });
-                if(chk_value.length==0){
-                    layer.msg('至少选择一个游戏信息',{shift: 6,icon:5});
-                    return false;
-                }
-                //计算容量是否合适
-                total = sumArr(chk_value);
-                if(cardval<total){
-                    layer.msg('选择游戏已超出卡片容量',{shift: 6,icon:5});
-                    return false;
-                }
-                $.ajax({
-                    url:"{{url('/permissions')}}",
-                    data:$('form').serialize(),
-                    type:'post',
-                    dataType:'json',
-                    success:function(res){
-                        if(res.status == 1){
-                            layer.msg(res.msg,{icon:6});
-                            var index = parent.layer.getFrameIndex(window.name);
-                            setTimeout('parent.layer.close('+index+')',2000);
-                        }else{
-                            layer.msg(res.msg,{shift: 6,icon:5});
-                        }
-                    },
-                    error : function(XMLHttpRequest, textStatus, errorThrown) {
-                        layer.msg('网络失败', {time: 1000});
-                    }
-                });
-                return false;
-            });
-        });
-        function sumArr(value) {
-            var sum = value.reduce(function(prev,cur,index,array){
-                return prev + cur
-            });
-            return sum;
+          	@foreach($card_type as $ctype)
+          	<tr class = "cardtypediv"> 
+              <td class="cardtd">
+              <input id="cardtype" name="cardtype" type="radio" value="{{$ctype['min_capacity']}}" onchange="cardClick('{{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B')"/>
+            	<span class="spantd">{{$ctype['max_capacity']}}{{$ctype['max_capacity_danwei']}}B={{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B</span>
+              </td>
+            </tr> 
+            @endforeach
+          	
+            </table>
+        </div>
+        <div id="divGameInfo" style="width:100%; left:0;top:0;display: block">					
+          <table width="100%" border="1" align="left" cellpadding="0" cellspacing="1" bgcolor="#C4D8ED" id="gametable">
+            <tr class="TdUl">
+              <td colspan=6>可以选择的游戏信息</td>
+            </tr>
+           
+            @foreach($games as $game)
+              <tr id="row_{{$game['id']}}" class="gamelist">
+                <td width="5%" style="text-align:center;"><input type="checkbox"  name="selarray[]" id="{{$game['id']}}" value="{{$game['id']}}" onChange='check()'  style="height:20px;width:20px;"/></td>
+                <td width="10%" style="text-align:center;">{{$game['number']}}</td>
+                <td width="40%" style="text-align:left;padding-left:5px;">{{$game['game_name']}}</td>
+                <td width="10%" style="text-align:center;">{{$game['language']}}</td>
+                <td width="15%" style="text-align:center;" id="gb_{{$game['id']}}">{{$game['size_range']}}</td>
+              </tr>
+            @endforeach
+           
+          </table>
+        </div>
+				</div>
+			</section>
+			
+		</div>
+		
+<script type="text/javascript">
+	$(document).ready(function(){
+
+		
+
+
+	});	
+ 
+	function typeChange(machtype){
+    type = machtype.split('-');
+		$.get("{{url('/home/edit')}}",{id:type[1],type_name:type[0]},function(data){
+        if(data['status']==1){
+            typecard = data['data'][0];
+            games = data['data'][1]['games'];
+            var str = "";
+            var gamestr = ""; 
+            //移除table 下的tr
+            $("#tabcardtype tr:not(:first)").remove();
+            //添加卡片类型元素
+            tab = document.getElementById("tabcardtype");
+            for(var i =0 ;i<typecard.length;i++){
+                tab.appendChild(getDataRow(typecard[i]));
+            }
+            //移除table 下的tr
+            $("#gametable tr:not(:first)").remove();
+            //添加游戏列表元素
+            gametable = document.getElementById("gametable");
+            for(var i =0 ;i<games.length;i++){
+                gametable.appendChild(getGameDataRow(games[i]));
+            }          
+            $("#mycardrl").text(0);
+            $("#selrlsum").text(0);
+            $("#havecardrl").text(0);
+        }else{
+          layer.msg('操作失败');
         }
-    </script>
-</body>
+    },'json');
+	}
+
+  //插入卡片类型表格元素
+  function getDataRow(h){
+    var row = document.createElement('tr');
+    var td = document.createElement('td');
+    td.className = "cardtd";
+    var tdinput = document.createElement('input');
+        tdinput.setAttribute('type','radio');
+        tdinput.setAttribute('id','cardtype');
+        tdinput.setAttribute('name','cardtype');
+        tdinput.setAttribute('value',h.min_capacity);
+        tdinput.setAttribute('onchange','cardClick('+h.min_capacity+')'); 
+    var spantd = document.createElement('span'); 
+        spantd.className = "spantd"; 
+        spantd.innerHTML= h.max_capacity+h.max_capacity_danwei+'='+h.min_capacity+h.min_capacity_danwei;
+    td.appendChild(tdinput);
+    td.appendChild(spantd);    
+    row.appendChild(td);
+    return row;
+
+  }
+
+
+  //插入游戏列表表格元素
+  function getGameDataRow(h){
+    var row = document.createElement('tr');
+        row.id = "row_"+h.id;
+    var td = document.createElement('td');
+    td.className = "gametd";
+    var tdinput = document.createElement('input');
+        tdinput.setAttribute('type','checkbox');
+        tdinput.setAttribute('id',h.id);
+        tdinput.setAttribute('name','selarray[]');
+        tdinput.setAttribute('value',h.id);
+        tdinput.setAttribute('onchange','check()');
+        tdinput.setAttribute('class','gamebox'); 
+    td.appendChild(tdinput); 
+    row.appendChild(td);
+    var bianhao = document.createElement('td');
+        bianhao.innerHTML = h.number;
+        bianhao.className = "gametd";
+    row.appendChild(bianhao);
+    var name = document.createElement('td');
+        name.innerHTML = h.game_name;
+        name.className = "gamenametd";
+    row.appendChild(name);
+    var language = document.createElement('td');
+        language.innerHTML = h.language;
+        language.className = "languagetd";
+    row.appendChild(language);
+    var size_range = document.createElement('td');
+        size_range.innerHTML = h.size_range;
+        size_range.className = "size_range";
+        size_range.id ='gb_'+h.id;
+    row.appendChild(size_range);
+    return row;
+
+  }
+  function cardClick(s){
+
+      $("#mycardrl").text(s);
+  }
+ 
+  //判断是否选择游戏
+  function check(){
+   
+    var chk_value =[];
+    var card = $('input[name="cardtype"]:checked').val();
+    if(!card){
+      layer.msg("请选择卡片类型");
+      return false;
+    }
+    var f = 0;
+    $('input[name="selarray[]"]:checked').each(function(){
+          id = $(this).val();          
+          var size_range = parseFloat($("#gb_"+id).text());
+          f += size_range;
+
+          if(f>parseFloat(card)){
+            layer.msg("所选游戏超出卡片容量请重新选择");
+            return false;
+          }
+          $("#selrlsum").text(f);
+          havecard = parseFloat(card)-f;
+          $("#havecardrl").text(havecard);
+          chk_value.push($(this).val());
+    });
+    //console.log(chk_value);
+  }
+
+  //选好提交订单
+  function order(){
+       var mycardrl = $("#mycardrl").text();
+      var selrlsum = $("#selrlsum").text();
+      var havecardrl = parseFloat($("#havecardrl").text());     
+      if(mycardrl==0){
+        layer.msg("请选游戏卡片类型");
+        return false;
+      }
+      if(selrlsum==0){
+        layer.msg("请选游戏");
+        return false;
+      }
+      if(havecardrl<0.00){
+        layer.msg("选择的游戏已经超过了卡片的最大容量,请确定后再操作");
+        return false;
+      }
+      var typeid = document.getElementById('machtype').value;
+      console.log(typeid);
+      var card = document.getElementById('cardtype').value;
+      var gameid =[];      
+      $('input[name="selarray[]"]:checked').each(function(){
+          gameid.push($(this).val());
+         
+      });      
+      $.get("{{url('/home/checkorder')}}",{type:typeid,card:card,gameid:gameid},function(data){
+          if(data['code']==0){
+            window.location.href="{{url('/home/confirm')}}?type="+typeid+"&card="+card+"&gameid="+gameid.join(',');
+          }else{
+             layer.msg('失败');
+          }
+
+      },'json');
+
+  }
+</script>		
+	</body>
 </html>

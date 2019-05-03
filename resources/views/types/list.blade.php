@@ -19,7 +19,7 @@
         <thead>
         <tr>
             <th class="hidden-xs">ID</th>
-            <th class="hidden-xs">机型名称</th>
+            <th>机型名称</th>
             <th class="hidden-xs">容量大小区间</th>            
             <th class="hidden-xs">创建时间</th>
             <th class="hidden-xs">修改时间</th>
@@ -30,8 +30,8 @@
         @foreach($list as $info)
             <tr>
                 <td class="hidden-xs">{{$info['id']}}</td>
-                <td class="hidden-xs">{{$info['type_name']}}</td>
-                <td class="hidden-xs">{{$info['card_type']}}</td>                
+                <td>{{$info['type_name']}}</td>
+                <td class="hidden-xs">{{$info['card_range']}}</td>                
                 <td class="hidden-xs">{{$info['created_at']}}</td>
                 <td class="hidden-xs">{{$info['updated_at']}}</td>
                 <td>

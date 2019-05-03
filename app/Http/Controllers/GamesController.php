@@ -19,13 +19,21 @@ class GamesController extends BaseController
      * 游戏列表
      */
     public function index(){
-        $list = Game::get()->where('status',1)->toArray();
-        foreach ($list as $key => $value) {
-           $typeid = Game::find($value['id'])->typeToIds();
-           $tyname = Type::get('type_name')->where('id','in',$typeid)->toArray();
-           $list['type_name'] = implode(',', $tyname);
-        }
-        return view('games.list',['list'=>$list]);
+        //$pager = $sql->orderBy('id', 'desc')->paginate()->appends($request->all());
+        $sql = new Game();
+        $pager = $sql->where('status',1)->orderBy('id', 'desc')->paginate();
+        //errorLog($list,'bb.log');
+        foreach ($pager as $key => $value) {
+           $typeid = [];
+           $typeid = Game::find($value['id'])->typeToIds();           
+           $tyname = Type::get()->whereIn('id',$typeid)->toArray();           
+           $tylist = [];
+           foreach ($tyname as $k => $val) {
+               $tylist[$k] = $val['type_name'];
+           }
+           $pager[$key]['type_name'] = implode(',', $tylist);
+        }     
+        return view('games.list',['pager'=>$pager]);
     }
     /**
      * 游戏编辑列表
@@ -34,7 +42,7 @@ class GamesController extends BaseController
     {
         $info = $id?Game::find($id):[];
         $typelist = $info?$info->typeToIds():[];
-        return view('games.edit', ['id'=>$id,'info'=>$info,'types'=>Type::all(),'typelist'=>$typelist]);
+        return view('games.edit', ['id'=>$id,'info'=>$info,'types'=>Type::where('status',1)->get(),'typelist'=>$typelist]);
     }
     /**
      * 游戏增加保存

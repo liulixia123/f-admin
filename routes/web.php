@@ -37,3 +37,8 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
 });
 //前台首页
 Route::get('/home',                   'IndexController@index');
+Route::get('/home/edit',                   'IndexController@edit');
+Route::get('/home/checkorder',                   'IndexController@checkorder');
+Route::get('/home/confirm',                   'IndexController@confirmOrder');
+Route::post('/home/confirm',                   'IndexController@confirm');
+Route::post('/types/store',           'TypesController@store');

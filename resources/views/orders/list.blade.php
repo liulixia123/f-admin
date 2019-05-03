@@ -1,7 +1,7 @@
 @section('title', '订单管理')
 @section('header')
     <div class="layui-inline">
-        <div class="layui-btn layui-btn-small layui-btn-warm hidden-xs fresh" fresh-url="{{url('/logs')}}"><i class="layui-icon">&#x1002;</i></div>
+        <div class="layui-btn layui-btn-small layui-btn-warm hidden-xs fresh" fresh-url="{{url('/orders')}}"><i class="layui-icon">&#x1002;</i></div>
     </div>
     <div class="layui-inline">
         <input type="text" lay-verify="title" value="{{ $input['title'] or '' }}" name="title" placeholder="请输入关键字" autocomplete="off" class="layui-input">
@@ -9,13 +9,12 @@
     <div class="layui-inline">
         <select name="status" lay-filter="status" lay-verify="status">
             <option value="">请选择一个内容</option>
-            <option value="admin_id" {{isset($input['status'])&&$input['status']=='admin_id'?'selected':''}}>用户ID</option>
-            <option value="log_url" {{isset($input['status'])&&$input['status']=='log_url'?'selected':''}}>URL</option>
-            <option value="log_ip" {{isset($input['status'])&&$input['status']=='log_ip'?'selected':''}}>IP</option>
+            <option value="order_num" {{isset($input['status'])&&$input['status']=='order_num'?'selected':''}}>订单ID</option>
+            <option value="mobile" {{isset($input['status'])&&$input['status']=='mobile'?'selected':''}}>用户手机号</option>            
         </select>
     </div>
     <div class="layui-inline">
-        <input class="layui-input" name="begin" placeholder="开始日期" onclick="layui.laydate({elem: this, festival: true})" value="{{ $input['begin'] or '' }}">
+        <input class="layui-input" name="begin" placeholder="下单日期" onclick="layui.laydate({elem: this, festival: true})" value="{{ $input['begin'] or '' }}">
     </div>
     <div class="layui-inline">
         <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">搜索</button>
@@ -34,22 +33,27 @@
         <thead>
         <tr>
             <th class="hidden-xs">ID</th>
-            <th class="hidden-xs">用户手机号</th>
-            <th>内容</th>
-            <th class="hidden-xs">URL</th>
-            <th class="hidden-xs">IP</th>
-            <th>创建时间</th>
+            <th class="hidden-xs">订单ID</th>
+            <th>用户手机号</th>
+            <th class="hidden-xs">内容</th>
+            <th class="hidden-xs">下单时间</th>
+            <th>操作</th>
         </tr>
         </thead>
         <tbody>
         @foreach($pager as $list)
             <tr>
                 <td class="hidden-xs">{{$list['id']}}</td>
-                <td class="hidden-xs">{{$list['admin_id']}}</td>
-                <td>{{$list['log_info']}}</td>
-                <td class="hidden-xs">{{$list['log_url']}}</td>
-                <td class="hidden-xs">{{$list['log_ip']}}</td>
-                <td>{{$list['log_time']}}</td>
+                <td class="hidden-xs">{{$list['order_num']}}</td>
+                <td>{{$list['mobile']}}</td>
+                <td class="hidden-xs">机型:{{$list['type_name']}} 容量:{{$list['card_range']}} 选择游戏个数:{{$list['games_total']}}</td> 
+                <td class="hidden-xs">{{$list['created_at']}}</td>
+                <td>
+                    <div class="layui-inline">
+                        <button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$list['id']}}" data-desc="查看订单" data-url="{{url('/orders/'. $list['id'] .'/edit')}}"><i class="layui-icon">&#xe642;</i></button>
+                        <button class="layui-btn layui-btn-small layui-btn-danger del-btn" data-id="{{$list['id']}}" data-url="{{url('/orders/'.$list['id'])}}"><i class="layui-icon">&#xe640;</i></button>
+                    </div>
+                </td>
             </tr>
         @endforeach
         @if(!$pager[0])
@@ -80,14 +84,11 @@
                     var select_info = $("select[name='status']").val();
                     if(value&&select_info){
                         switch (select_info){
-                            case 'log_url':
-                                if(!(/^\/(.*)/).test(value))return '请输入正确格式的URL';
+                            case 'order_num':
+                                if(!(/^[0-9]\d+/).test(value))return '请输入正确格式的订单ID';
                                 break;
-                            case 'log_ip':
-                                if((/^\/(.*)/).test(value))return '请输入正确格式的IP';
-                                break;
-                            case 'admin_id':
-                                if(!(/^[0-9]$/).test(value))return '请输入正确格式的用户ID';
+                            case 'mobile':
+                                if(!(/^[1][3,4,5,7,8]\d+/).test(value))return '请输入正确格式的手机号';
                                 break;
                             default:
                                 return '输入参数错误';

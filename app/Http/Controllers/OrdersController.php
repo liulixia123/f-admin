@@ -19,17 +19,45 @@ class OrdersController extends BaseController
     /**
      * 订单列表
      */
-    public function index(){
-        return view('permissions.list',['list'=>Permission::get()->toArray()]);
+    public function index(Request $request){
+        /*$game = ['typeid'=>1,'type_name'=>'PSV','card_range'=>70,
+                'games'=>[
+                    ['id'=>1,'game_name'=>'双飞粉','size_range'=>0.19],
+                    ['id'=>1,'game_name'=>'返回手动挡','size_range'=>1],
+                    ['id'=>1,'game_name'=>'de','size_range'=>1.2]
+                ]
+        ];
+        errorLog(serialize($game),'bb.log');*/
+        $sql = new Order();
+        if(true == $request->has('title')&&true == $request->has('status')) {
+            $sql->where('orders.'.$request->input('status'), 'LIKE', '%'.trim($request->input('title')).'%');
+        }
+        if(true == $request->has('begin')) {
+            $sql->where('orders.created_at', '>=', trim($request->input('begin')));
+        }
+        $sql->select('orders.*');
+        $pager = $sql->orderBy('id', 'desc')->paginate()->appends($request->all());
+        foreach ($pager as $key => $value) {
+            $orderlist = unserialize($value['info']);
+            $pager[$key]['type_name'] = $orderlist['type_name'];
+            $pager[$key]['card_range'] = $orderlist['card_range'];
+            $gamelist = $orderlist['games'];
+            $pager[$key]['games_total'] = count($gamelist);
+            $pager[$key]['games'] = $gamelist;
+        }
+        return view('orders.list',['pager'=>$pager,'input'=>$request->all()]);
     }
     /**
      * 订单编辑列表
      */
     public function edit($id=0)
     {
-        $info = $id?Permission::find($id):[];
-        $role = $info?$info->roleToIds():[];
-        return view('permissions.edit', ['id'=>$id,'info'=>$info,'roles'=>Role::all(),'rolelist'=>$role]);
+        $info = $id?Order::find($id):[];
+        $orderlist = unserialize($info['info']);
+        $info['type_name'] = $orderlist['type_name'];
+        $info['card_range'] = $orderlist['card_range'];
+        $gamelist = $orderlist['games'];
+        return view('orders.edit', ['id'=>$id,'info'=>$info,'roles'=>Role::all(),'gamelist'=>$gamelist]);
     }
     /**
      * 订单增加保存

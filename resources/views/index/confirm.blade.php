@@ -5,40 +5,31 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<meta name="format-detection" content="telephone=no">
-		<title>提交游戏采购</title>
-		<link href="css/reset.css" rel="stylesheet">
-		<link rel="stylesheet" href="css/font.css" />
-		<link rel="stylesheet" href="css/swiper-3.3.1.min.css" />
-		<link rel="stylesheet" href="css/common.css" />
-		<link rel="stylesheet" href="css/Homepage.css" />
-		<link rel="stylesheet" href="css/ModularForm.css" />
-		<link rel="stylesheet" href="css/LoginRegister.css" />
-		<link rel="stylesheet" href="css/layer.css" />
-		<script type="text/javascript" src="js/jquery-2.1.0.min.js"></script>
+		<title>提交游戏采购</title>		
 		
-		<script type="text/javascript" src="js/fastclick.js"></script>
-		<script type="text/javascript" src="js/layer.js"></script>
+		<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdn.bootcss.com/layer/3.1.0/layer.js"></script>
 	
 	<script language="javascript" type="text/javascript">
 	<!--
 	$(function(){
 	    $("#add_button").click(function(){    	
-			var taobaoid=$("#taobaoid").val();
-			if (taobaoid==""){
+			var mobile=$("#mobile").val();
+			if (mobile==""){
 				layer.open({
 					  title: '提示信息'
 					  ,content: '填写收货手机号码不能为空！'
 					}); 
-				$("#taobaoid").focus();
+				$("#mobile").focus();
 				return false;
 			}
-			if (!taobaoid.match(/^1[34578]\d{9}$/)) { 
+			if (!mobile.match(/^1[34578]\d{9}$/)) { 
 				layer.open({
 					  title: '提示信息'
 					  ,content: '手机号码格式不正确！'
 					}); 
 				//$("#moileMsg").html("<font color='red'>手机号码格式不正确！请重新输入！</font>"); 
-				$("#taobaoid").focus();
+				$("#mobile").focus();
 				return false; 
 			}
 			var selcartype=$("#selcartype").val();
@@ -78,7 +69,7 @@
 	</style>
 </head>
 <body>
-	<form name="form1" method="post" action="usergame_add.php" id="form1" onsubmit="return check()">
+	<form name="form1" method="post" action="{{url('/home/confirm')}}" id="form1" onsubmit="return check()">
 		<div class="wrapper">
 			<!--页头-->
 			<header class="header">
@@ -91,7 +82,7 @@
 					<div class="DeInfoInput LoginInput">
 						<label class="icon-1 floatL"></label>
 						<label style="display: none;">请填写收货手机号码：</label>
-						<input type="text" name="taobaoid" id="taobaoid" placeholder="请填写收货手机号码" class="DeInfo_text" data-regtest="^1[3|4|5|7|8]\d{9}$ ">
+						<input type="text" name="mobile" id="mobile" placeholder="请填写收货手机号码" class="DeInfo_text" data-regtest="^1[3|4|5|7|8]\d{9}$ ">
 					</div>
 					<p class="errorShow">不能为空</p>
 					
@@ -99,18 +90,20 @@
 					  <tr class="TdUl">
 						<td colspan=5 align="left">已经选择的游戏游戏信息</td>
 					  </tr>
-
-					   <tr class="TdSecond" id="row_PCSD00021">
-						  <td style="text-align:left;padding-left:5px;">13分队</td>
-						  <td style="text-align:left;padding-left:5px;">1</td>
-						  <td style="text-align:left;padding-left:5px;">英文</td>
-						  <td style="text-align:left;padding-left:5px;" id="gb_PCSD00021">0.91</td>
-					  </tr>	
-
+						@foreach($gamearr as $game)
+						   <tr class="TdSecond" id="row_{{$game['id']}}">
+							  <td style="text-align:left;padding-left:5px;">{{$game['game_name']}}</td>
+							  <td style="text-align:left;padding-left:5px;">{{$game['number']}}</td>
+							  <td style="text-align:left;padding-left:5px;">{{$game['language']}}</td>
+							  <td style="text-align:left;padding-left:5px;" id="gb_PCSD00021">{{$game['size_range']}}</td>
+						  </tr>	
+					  	@endforeach
 					   <tr>
 						   <td colspan="4">
-							  <input name="selcartype" id="selcartype" type="hidden" value="128GB"/>
-								<input name="selgameconent" id="selgameconent" type="hidden" value="PCSD00021,PCSG00524"/>
+						   	  <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+						   	  <input name="type" id="type" type="hidden" value='{{request()->input("type")}}'/>
+							  <input name="selcartype" id="selcartype" type="hidden" value='{{request()->input("card")}}'/>
+							  <input name="gameid" id="selgameconent" type="hidden" value='{{request()->input("gameid")}}'/>
 							  <input type="submit" name="submit" value="提交游戏采购单" id="add_button" style="width:100%;height:50px;">
 							</td>
 						</tr>

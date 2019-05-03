@@ -196,7 +196,7 @@ class DataService{
                 switch ($kind[1]){
                     case 'add_or_update':
                         $model->type_name = $inputs['type_name'];
-                        $model->card_type = $inputs['card_type'];
+                        $model->card_type = serialize($inputs['card_type']);
                         if($inputs['id']){
                             if (is_config_id($inputs['id'], "admin.type_table_cannot_manage_ids", false))return ['status'=>0,'msg'=>trans('fzs.types.notedit')];
                             $model->exists = true;
@@ -229,7 +229,8 @@ class DataService{
                         $model->game_name = $inputs['game_name'];
                         $model->number = $inputs['number'];
                         $model->size_range = $inputs['size_range'];
-                        $model->language = $inputs['language'];                        
+                        $model->language = $inputs['language']; 
+                        $model->danwei = $inputs['danwei'];                        
                         if($inputs['id']){
                             if (is_config_id($inputs['id'], "admin.game_table_cannot_manage_ids", false))return ['status'=>0,'msg'=>trans('fzs.games.notedit')];
                             $model->exists = true;
