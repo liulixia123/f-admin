@@ -95,7 +95,7 @@
 							  <td style="text-align:left;padding-left:5px;">{{$game['game_name']}}</td>
 							  <td style="text-align:left;padding-left:5px;">{{$game['number']}}</td>
 							  <td style="text-align:left;padding-left:5px;">{{$game['language']}}</td>
-							  <td style="text-align:left;padding-left:5px;" id="gb_PCSD00021">{{$game['size_range']}}</td>
+							  <td style="text-align:left;padding-left:5px;" id="gb_PCSD00021">{{$game['size_range']}}{{$game['danwei']}}B</td>
 						  </tr>	
 					  	@endforeach
 					   <tr>

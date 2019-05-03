@@ -88,7 +88,7 @@
           	@foreach($card_type as $ctype)
           	<tr class = "cardtypediv"> 
               <td class="cardtd">
-              <input id="cardtype" name="cardtype" type="radio" value="{{$ctype['min_capacity']}}" onchange="cardClick('{{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B')"/>
+              <input id="cardtype" name="cardtype" type="radio" value="{{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B" onchange="cardClick('{{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B')"/>
             	<span class="spantd">{{$ctype['max_capacity']}}{{$ctype['max_capacity_danwei']}}B={{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B</span>
               </td>
             </tr> 
@@ -108,7 +108,7 @@
                 <td width="10%" style="text-align:center;">{{$game['number']}}</td>
                 <td width="40%" style="text-align:left;padding-left:5px;">{{$game['game_name']}}</td>
                 <td width="10%" style="text-align:center;">{{$game['language']}}</td>
-                <td width="15%" style="text-align:center;" id="gb_{{$game['id']}}">{{$game['size_range']}}</td>
+                <td width="15%" style="text-align:center;" id="gb_{{$game['id']}}">{{$game['size_range']}}{{$game['danwei']}}B</td>
               </tr>
             @endforeach
            
@@ -167,8 +167,8 @@
         tdinput.setAttribute('type','radio');
         tdinput.setAttribute('id','cardtype');
         tdinput.setAttribute('name','cardtype');
-        tdinput.setAttribute('value',h.min_capacity);
-        tdinput.setAttribute('onchange','cardClick('+h.min_capacity+')'); 
+        tdinput.setAttribute('value',h.min_capacity+h.min_capacity_danwei+'B');
+        tdinput.setAttribute('onchange','cardClick("'+h.min_capacity+h.min_capacity_danwei+'B'+'")'); 
     var spantd = document.createElement('span'); 
         spantd.className = "spantd"; 
         spantd.innerHTML= h.max_capacity+h.max_capacity_danwei+'='+h.min_capacity+h.min_capacity_danwei;
@@ -191,7 +191,8 @@
         tdinput.setAttribute('id',h.id);
         tdinput.setAttribute('name','selarray[]');
         tdinput.setAttribute('value',h.id);
-        tdinput.setAttribute('onchange','check()');
+        tdinput.setAttribute('onChange','check()');
+        //tdinput.onpropertychange = check();
         tdinput.setAttribute('class','gamebox'); 
     td.appendChild(tdinput); 
     row.appendChild(td);
@@ -208,7 +209,7 @@
         language.className = "languagetd";
     row.appendChild(language);
     var size_range = document.createElement('td');
-        size_range.innerHTML = h.size_range;
+        size_range.innerHTML = h.size_range+h.danwei+"B";
         size_range.className = "size_range";
         size_range.id ='gb_'+h.id;
     row.appendChild(size_range);
@@ -219,7 +220,17 @@
 
       $("#mycardrl").text(s);
   }
- 
+  //判断单位大小转换
+  function getDanwei(size_range,danwei){
+    if(danwei=="GB"){
+      size_range = size_range*1000;
+    }else if(danwei=="TB"){
+      size_range = size_range*1000*1000;
+    }else{
+      size_range = size_range;
+    }
+    return size_range;
+  }
   //判断是否选择游戏
   function check(){
    
@@ -229,18 +240,23 @@
       layer.msg("请选择卡片类型");
       return false;
     }
+    carddanwei = card.substr(card.length-2,2);              
+    cardsize_range = parseFloat(card.substr(0,card.length-2));
+    cardsize = getDanwei(cardsize_range,carddanwei);
     var f = 0;
     $('input[name="selarray[]"]:checked').each(function(){
-          id = $(this).val();          
-          var size_range = parseFloat($("#gb_"+id).text());
-          f += size_range;
-
-          if(f>parseFloat(card)){
+          id = $(this).val();
+          str = $("#gb_"+id).text();
+          danwei = str.substr(str.length-2,2);              
+          size_range = parseFloat(str.substr(0,str.length-2));
+          //计算选择游戏的和
+          f += getDanwei(size_range,danwei);        
+          if(f>cardsize){
             layer.msg("所选游戏超出卡片容量请重新选择");
             return false;
           }
-          $("#selrlsum").text(f);
-          havecard = parseFloat(card)-f;
+          $("#selrlsum").text(f/1000);
+          havecard = (cardsize-f)/1000;
           $("#havecardrl").text(havecard);
           chk_value.push($(this).val());
     });
@@ -264,15 +280,29 @@
         layer.msg("选择的游戏已经超过了卡片的最大容量,请确定后再操作");
         return false;
       }
-      var typeid = document.getElementById('machtype').value;
-      console.log(typeid);
+      var typeid = document.getElementById('machtype').value;      
       var card = document.getElementById('cardtype').value;
-      var gameid =[];      
+      carddanwei = card.substr(card.length-2,2);              
+      cardsize_range = parseFloat(card.substr(0,card.length-2));
+      cardsize = getDanwei(cardsize_range,carddanwei);
+      /*console.log(card);*/
+      var gameid =[]; 
+      var f=0;     
       $('input[name="selarray[]"]:checked').each(function(){
+          id = $(this).val();
+          str = $("#gb_"+id).text();
+          danwei = str.substr(str.length-2,2);              
+          size_range = parseFloat(str.substr(0,str.length-2));
+          //计算选择游戏的和
+          f += getDanwei(size_range,danwei); 
           gameid.push($(this).val());
          
-      });      
-      $.get("{{url('/home/checkorder')}}",{type:typeid,card:card,gameid:gameid},function(data){
+      }); 
+      if(f>cardsize){
+            layer.msg("所选游戏超出卡片容量请重新选择");
+            return false;
+      }     
+      $.get("{{url('/home/checkorder')}}",{type:typeid,card:cardsize_range,gameid:gameid},function(data){
           if(data['code']==0){
             window.location.href="{{url('/home/confirm')}}?type="+typeid+"&card="+card+"&gameid="+gameid.join(',');
           }else{

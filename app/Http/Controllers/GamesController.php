@@ -18,10 +18,26 @@ class GamesController extends BaseController
     /**
      * 游戏列表
      */
-    public function index(){
+    public function index(Request $request){
         //$pager = $sql->orderBy('id', 'desc')->paginate()->appends($request->all());
+        return $this->show($request);
+    }
+    //根据条件查询
+    public function show(Request $request){
         $sql = new Game();
-        $pager = $sql->where('status',1)->orderBy('id', 'desc')->paginate();
+        if(true == $request->has('title')&&true == $request->has('status')) {
+            $pager = $sql->where($request->input('status'), 'LIKE', '%'.trim($request->input('title')).'%')->where('status',1)->orderBy('id', 'desc')->paginate()->appends($request->all());
+        }
+        if(true == $request->has('begin')) {
+            $pager = $sql->where('created_at', '>=', trim($request->input('begin')))->where('status',1)->orderBy('id', 'desc')->paginate()->appends($request->all());
+        }
+        if(true == $request->has('title')&&true == $request->has('status')&&true == $request->has('begin')) {
+            $pager =$sql->where($request->input('status'), 'LIKE', '%'.trim($request->input('title')).'%')->where('created_at', '>=', trim($request->input('begin')))->where('status',1)->orderBy('id', 'desc')->paginate()->appends($request->all());
+        }
+        if(false == $request->has('title')&&false == $request->has('status')&&false == $request->has('begin')) {
+            $pager = $sql->where('status',1)->orderBy('id', 'desc')->paginate()->appends($request->all());
+        }
+        //$pager = $sql->where('status',1)->orderBy('id', 'desc')->paginate()->appends($request->all());
         //errorLog($list,'bb.log');
         foreach ($pager as $key => $value) {
            $typeid = [];
@@ -33,7 +49,7 @@ class GamesController extends BaseController
            }
            $pager[$key]['type_name'] = implode(',', $tylist);
         }     
-        return view('games.list',['pager'=>$pager]);
+        return view('games.list',['pager'=>$pager,'input'=>$request->all()]);
     }
     /**
      * 游戏编辑列表

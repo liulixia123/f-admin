@@ -31,13 +31,18 @@ class IndexController extends Controller
     {
         $id = request()->input('id');
         $gameT = GameType::get()->where("type_id",$id)->toArray();
-        foreach ($gameT as $key => $value) {
+        if($gameT){
+        	foreach ($gameT as $key => $value) {
         	 $gameid[] = $value['game_id'];
+	        }
+	        $games = Game::get()->whereIn('id',$gameid)->toArray();
+	        foreach ($games as $key => $value) {
+	        	$game[] = $value;
+	        }
+        }else{
+        	$game= [];
         }
-        $games = Game::get()->whereIn('id',$gameid)->toArray();
-        foreach ($games as $key => $value) {
-        	$game[] = $value;
-        }
+        
         $info = Type::find($id);  
         $card_type[0] = $info?unserialize($info['card_type']):[];
         $card_type[1]['games'] = $game;
@@ -120,10 +125,11 @@ class IndexController extends Controller
 			$game['size_range'] = $value['size_range'];
 			$game['language'] = $value['language'];
 			$game['number'] = $value['number'];
+			$game['danwei'] = $value['danwei'];
 			$games[] = $game;
 		}
 		$order['typeid'] = $typeid;
-		$order['type_name'] = $typeid;
+		$order['type_name'] = $type_name;
 		$order['card_range'] = $selcartype;
 		$order['games'] = $games;
 		$Model = new Order();

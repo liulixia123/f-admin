@@ -29,6 +29,22 @@ function is_validate_capacity($capacity){
     return true;
 }
 /**
+ * 验证手机号
+ */
+function checkMobile($mobile){
+    $isMatched = preg_match('/^1[34578]\d{9}$/',$mobile,$matches);
+    if(!$isMatched){
+        return false;
+    }
+    return true;
+}
+/**
+ * 产生订单号
+ */
+function getOrderNumer(){
+    return date('YmdHis') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);;
+}
+/**
  * [errorLog 打印错误日志记录]
  * @param  [type] $message [打印日志记录]
  * @param  [type] $file    [日志文件名]

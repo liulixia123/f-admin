@@ -30,13 +30,18 @@ class OrdersController extends BaseController
         errorLog(serialize($game),'bb.log');*/
         $sql = new Order();
         if(true == $request->has('title')&&true == $request->has('status')) {
-            $sql->where('orders.'.$request->input('status'), 'LIKE', '%'.trim($request->input('title')).'%');
+            $pager = $sql->where($request->input('status'), 'LIKE', '%'.trim($request->input('title')).'%')->orderBy('id', 'desc')->paginate()->appends($request->all());
         }
         if(true == $request->has('begin')) {
-            $sql->where('orders.created_at', '>=', trim($request->input('begin')));
+            $pager = $sql->where('created_at', '>=', trim($request->input('begin')))->orderBy('id', 'desc')->paginate()->appends($request->all());
+        } 
+        if(true == $request->has('title')&&true == $request->has('status')&&true == $request->has('begin')) {
+            $pager = $sql->where($request->input('status'), 'LIKE', '%'.trim($request->input('title')).'%')->where('created_at', '>=', trim($request->input('begin')))->orderBy('id', 'desc')->paginate()->appends($request->all());
+        }       
+        if(false == $request->has('title')&&false == $request->has('status')&&false == $request->has('begin')) {
+            $pager = $sql->orderBy('id', 'desc')->paginate()->appends($request->all());
         }
-        $sql->select('orders.*');
-        $pager = $sql->orderBy('id', 'desc')->paginate()->appends($request->all());
+              
         foreach ($pager as $key => $value) {
             $orderlist = unserialize($value['info']);
             $pager[$key]['type_name'] = $orderlist['type_name'];

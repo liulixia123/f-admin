@@ -68,7 +68,7 @@
                         <input class="filter-title" type="text" readonly placeholder="pleace select" />
                         <i class="icon icon-filter-arrow"></i>
                     </div>
-                    <select name="card_type[{{$k}}][min_capacity_danwei]" id="min_danwei_{{$k}}" onchange="checkinput({{$k}})">
+                    <select name="card_type[{{$k}}][min_capacity_danwei]" id="min_danwei_{{$k}}" onchange="checkchange({{$k}})">
                         <option value="M" {{isset($list['min_capacity_danwei'])&&$list['min_capacity_danwei']=='M'?'selected':''}}>MB</option>
                         <option value="G" {{isset($list['min_capacity_danwei'])&&$list['min_capacity_danwei']=='G'?'selected':''}}>GB</option>
                         <option value="T" {{isset($list['min_capacity_danwei'])&&$list['min_capacity_danwei']=='T'?'selected':''}}>TB</option>
@@ -84,7 +84,7 @@
                         <input class="filter-title" type="text" readonly placeholder="pleace select" />
                         <i class="icon icon-filter-arrow"></i>
                     </div>
-                    <select name="card_type[{{$k}}][max_capacity_danwei]" id="max_danwei_{{$k}}" onchange="checkinput({{$k}})">
+                    <select name="card_type[{{$k}}][max_capacity_danwei]" id="max_danwei_{{$k}}" onchange="checkchange({{$k}})">
                         <option value="M" {{isset($list['max_capacity_danwei'])&&$list['max_capacity_danwei']=='M'?'selected':''}}>MB</option>
                         <option value="G" {{isset($list['max_capacity_danwei'])&&$list['max_capacity_danwei']=='G'?'selected':''}}>GB</option>
                         <option value="T" {{isset($list['max_capacity_danwei'])&&$list['max_capacity_danwei']=='T'?'selected':''}}>TB</option>
@@ -302,7 +302,7 @@
     var selectObj = document.createElement('select'); 
         selectObj.name = 'card_type['+item+'][min_capacity_danwei]'; 
         selectObj.id="min_danwei_"+item;
-        selectObj.onpropertychange = checkinput(item);
+        selectObj.onpropertychange = checkchange(item);
     var myOption=document.createElement("option");
         myOption.setAttribute("value","M");
         myOption.appendChild(document.createTextNode("MB"));
@@ -352,7 +352,7 @@
     var rselectObj = document.createElement('select'); 
         rselectObj.name = 'card_type['+item+'][max_capacity_danwei]';   
         rselectObj.id="max_danwei_"+item;
-        rselectObj.onpropertychange = checkinput(item);
+        rselectObj.onpropertychange = checkchange(item);
     var rmyOption=document.createElement("option");
         rmyOption.setAttribute("value","M");
         rmyOption.appendChild(document.createTextNode("MB"));
@@ -382,10 +382,7 @@
         $("#content").val(item);
         var jishu = item*2+1;
         var oushu = item*2;
-        $("#content").val(item+1);
-
-        /*var str = '<tr class="firsttr" ><td  align="center" valign="middle">            <input type="text" name="card_type['+item+'][min_capacity]" onkeyup="checkP(this);"  onpaste="checkP(this);"  oncut="checkP(this);"  ondrop="checkP(this);"  onchange="checkP(this);" id="min_id_'+item+'" onblur="checkinput('+item+')" class="inputout">           <div class="types_item"><div class="filter-box'+oushu+'"><div class="filter-text"><input class="filter-title" type="text" readonly placeholder="pleace select" />                     <i class="icon icon-filter-arrow"></i></div><select name="card_type['+item+'][min_capacity_danwei]" id="min_danwei_'+item+'" onchange="checkinput('+item+')">                        <option value="M">MB</option><option value="G" selected>GB</option><option value="T">TB</option></select></div></div></td>      <td  align="center" valign="middle">            <input type="text" name="card_type['+item+'][max_capacity]" onkeyup="checkP(this);"  onpaste="checkP(this);"  oncut="checkP(this);"  ondrop="checkP(this);"  onchange="checkP(this);" onblur="checkinput('+item+')" id="max_id_'+item+'" class="inputout">       <div class="types_item">  <div class="filter-box'+jishu+'"><div class="filter-text">  <input class="filter-title" type="text" readonly placeholder="pleace select" />                     <i class="icon icon-filter-arrow"></i></div><select name="card_type['+item+'][max_capacity_danwei]" id="max_danwei_'+item+'" onchange="checkinput('+item+')"><option value="M">MB</option><option value="G" selected>GB</option><option value="T">TB</option>    </select></div></div></td></tr>';*/
-        //getDataRow(item);
+        $("#content").val(item+1);        
         $("tr[class=firsttr]:last").after(getDataRow(item));
         $('.filter-box'+oushu).selectFilter({
             callBack : function (val){
@@ -403,7 +400,7 @@
 
         function submit1(){ 
         var item = parseInt($("#content").val());
-        for(var i=0;i<=item;i++){
+        /*for(var i=0;i<=item;i++){
             max_capacity = parseFloat($("#max_id_"+i).val());
             min_capacity =  parseFloat($("#min_id_"+i).val());
             max_danwei= $("#max_danwei_"+i).val();
@@ -437,7 +434,7 @@
                 $("#min_id_"+i).focus();
                 return false;
             }
-        }
+        }*/
                 $.ajax({
                     url:"{{url('/types/store')}}",
                     data:$('form').serialize(),
