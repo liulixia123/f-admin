@@ -34,7 +34,7 @@
 </head>
 <body>
 <div class="wrap-container">
-    <form class="layui-form" style="width: 100%;padding-top: 20px;padding-right: 10px;">
+    <form class="layui-form" style="width: 100%;padding-top: 20px;padding-right: 10px;" enctype="multipart/form-data" method="post">
         {{ csrf_field() }}
         <div class="layui-form-item">
         <label class="layui-form-label">机型名称:</label>
@@ -476,12 +476,13 @@
                 return false;
             }
         }*/
+        console.log($('form').serialize());
                 $.ajax({
                     url:"{{url('/types/store')}}",
                     data:$('form').serialize(),
                     type:'post',
                     dataType:'json',
-                    mimeType:"multipart/form-data",
+                    //mimeType:"multipart/form-data",
                     success:function(res){
                         console.log(res);
                         if(res.status == 1){

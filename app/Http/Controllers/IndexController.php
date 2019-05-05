@@ -55,6 +55,7 @@ class IndexController extends Controller
 		$type = $request['type'];//机型id
 		$card = $request['card'];//卡片容量
 		$gameid = $request['gameid'];//游戏id
+		$mobile = $request['mobile'];
 		if(empty($type)){
 			return ['code'=>1,'msg'=>trans('fzs.common.wrong')];
 		}
@@ -62,6 +63,9 @@ class IndexController extends Controller
 			return ['code'=>1,'msg'=>trans('fzs.common.wrong')];
 		}
 		if(empty($gameid)||!is_array($gameid)){
+			return ['code'=>1,'msg'=>trans('fzs.common.wrong')];
+		}
+		if(!checkMobile($mobile)){
 			return ['code'=>1,'msg'=>trans('fzs.common.wrong')];
 		}
 		//判断数据库是否存在该机型
@@ -82,7 +86,7 @@ class IndexController extends Controller
 			return ['code'=>1,'msg'=>trans('fzs.common.wrong')];
 		}
 		// 判断游戏id是否存在
-		$gamearr = Game::whereIn('id',$gameid)->get(['id'])->toArray();
+		$gamearr = Game::whereIn('id',$gameid)->get()->toArray();
 		if(empty($gamearr)){
 			return ['code'=>1,'msg'=>trans('fzs.common.wrong')];
 		}
@@ -94,6 +98,7 @@ class IndexController extends Controller
 		}
 		return ['code'=>0,'msg'=>trans('fzs.common.success')];
 	}
+
 	// 获取确认订单的页面
 	public function confirmOrder(){
 		$request = request()->all();
@@ -117,8 +122,8 @@ class IndexController extends Controller
 		$typearr = Type::where('type_name',$type)->get()->toArray();
 		$typeid = $typearr[0]['id'];
 		$type_name = $typearr[0]['type_name'];
-		$gameidarr = explode(',', $gameid);
-		$gamearr = Game::whereIn('id',$gameidarr)->get()->toArray();
+		//$gameidarr = explode(',', $gameid);
+		$gamearr = Game::whereIn('id',$gameid)->get()->toArray();
 		foreach ($gamearr as $key => $value) {
 			$game['id'] = $value['id'];
 			$game['game_name'] = $value['game_name'];
@@ -137,6 +142,6 @@ class IndexController extends Controller
 		$Model->order_num = getOrderNumer();
 		$Model->info = serialize($order);		
 		$Model->save();
-		return Redirect::to("/home");
+		return ['code'=>0,'msg'=>trans('fzs.common.success')];
 	}
 }
