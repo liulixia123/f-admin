@@ -17,7 +17,9 @@ class CreateTypesTable extends Migration
         {
             $table->increments('id')->comment('ID');
             $table->string('type_name')->unique()->comment('机型名称');
-            $table->string('card_type')->comment('卡片类型');            
+            $table->string('card_type')->comment('卡片类型');
+            $table->string('picfile')->comment('未选择图片');
+            $table->string('checkedpicfile')->comment('选中后图片');            
             $table->smallInteger('status')->default(1)->comment('状态');           
             $table->timestamps();
         });

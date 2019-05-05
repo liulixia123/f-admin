@@ -7,6 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 
 class DataService{
+    public function upload($file){
+        //$file = $request['picfile'];
+        if(in_array(strtolower($file->extension()),['jpg','png','gif','jpeg','gpeg'])){
+//          3.获取文件
+ 
+//          4.将文件取一个新的名字
+            $newName = 'games'.time().rand(100000, 999999).$file->getClientOriginalName();
+//           5.移动文件,并修改名字
+            $date = date('Y-m-d');
+            $file->move(public_path().'/uploads/'.$date.'/',$newName);
+            $img_path = 'uploads/'.$date.'/'.$filename;
+            return $img_path;               
+        }else{
+            return "";
+        }
+
+    }
 
     public static function handleDate(Model $model, Array $inputs,$kind){
         $kind = explode('-',$kind);
@@ -197,6 +214,8 @@ class DataService{
                     case 'add_or_update':
                         $model->type_name = $inputs['type_name'];
                         $model->card_type = serialize($inputs['card_type']);
+                        $model->picfile = $this->upload($inputs['picfile']);
+                        $model->checkedpicfile = $this->upload($inputs['checkedpicfile']);
                         if($inputs['id']){
                             if (is_config_id($inputs['id'], "admin.type_table_cannot_manage_ids", false))return ['status'=>0,'msg'=>trans('fzs.types.notedit')];
                             $model->exists = true;
