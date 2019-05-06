@@ -13,6 +13,7 @@
     <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src = "https://cdn.bootcss.com/layer/3.1.0/layer.js"></script>
     <script src="/static/admin/js/selectFilter.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/admin/js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
     <style type="text/css">
 .types_item {
   display: inline;
@@ -34,7 +35,7 @@
 </head>
 <body>
 <div class="wrap-container">
-    <form class="layui-form" style="width: 100%;padding-top: 20px;padding-right: 10px;" enctype="multipart/form-data" method="post">
+    <form class="layui-form" style="width: 100%;padding-top: 20px;padding-right: 10px;" enctype="multipart/form-data" method="post" action="{{url('/types/store')}}" id="ajaxForm">
         {{ csrf_field() }}
         <div class="layui-form-item">
         <label class="layui-form-label">机型名称:</label>
@@ -180,7 +181,7 @@
         }
     });
     }  
-    
+     //选择图片后预览
      $('#chooseImage').on('change',function(){
         var filePath = $(this).val(),         //获取到input的value，里面是文件的路径
             fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase(),
@@ -194,7 +195,7 @@
   
         $('#cropedBigImg').attr('src',src);
 });
-     
+     //选择图片后预览
      $('#chooseImage1').on('change',function(){
         var filePath = $(this).val(),         //获取到input的value，里面是文件的路径
             fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase(),
@@ -209,7 +210,7 @@
         $('#cropedBigImg1').attr('src',src);
 });
 
-
+    //检查输入框输入的数据大小值比较是否正确
     function checkinput(s){
         max_capacity = parseFloat($("#max_id_"+s).val());
         min_capacity =  parseFloat($("#min_id_"+s).val());
@@ -256,6 +257,7 @@
         }*/
 
     }
+    //检查最小值和最大值选择后比较是否正确
     function checkchange(s){
         max_capacity = parseFloat($("#max_id_"+s).val());
         min_capacity =  parseFloat($("#min_id_"+s).val());
@@ -294,6 +296,7 @@
         }
         return true;
     }
+    // 检查输入的值格式是否正确
     function checkP(o){
         theV=isNaN(parseFloat(o.value))?0:parseFloat(o.value);
         theV=parseInt(theV*100)/100;
@@ -437,51 +440,73 @@
                 console.log(val)
             }
         });
-        }
-
-        function submit1(){ 
+    }
+    //form表单异步提交
+    function submit1(){ 
         var item = parseInt($("#content").val());
-        /*for(var i=0;i<=item;i++){
-            max_capacity = parseFloat($("#max_id_"+i).val());
-            min_capacity =  parseFloat($("#min_id_"+i).val());
-            max_danwei= $("#max_danwei_"+i).val();
-            min_danwei = $("#min_danwei_"+i).val();
-            if(isNaN(min_capacity)){
-                layer.msg("请输入最小值！");
-                $("#min_id_"+i).focus();
-                return false;
-            }
-            if(isNaN(max_capacity)){
-                layer.msg("请输入最大值！");
-                $("#max_id_"+i).focus();
-                return false;
-            }
-            if(min_danwei=='G'){
-                min_capacity = min_capacity*1000;
-            }else if(min_danwei=='T'){
-                min_capacity = min_capacity*1000*1000;
-            }else{
-                min_capacity = min_capacity;
-            }
-            if(max_danwei=='G'){
-                max_capacity = max_capacity*1000;
-            }else if(max_danwei=='T'){
-                max_capacity = max_capacity*1000*1000;
-            }else{
-                max_capacity = max_capacity;
-            }           
-            if(min_capacity>=max_capacity){
-                layer.msg("最小值必须小于最大值！");
-                $("#min_id_"+i).focus();
-                return false;
-            }
-        }*/
-        console.log($('form').serialize());
-                $.ajax({
+        /**/
+        $("#ajaxForm").ajaxSubmit({
+                    beforeSubmit:function () {
+                       layer.msg("我在提交表单之前被调用！");
+                       for(var i=0;i<=item;i++){
+                            max_capacity = parseFloat($("#max_id_"+i).val());
+                            min_capacity =  parseFloat($("#min_id_"+i).val());
+                            max_danwei= $("#max_danwei_"+i).val();
+                            min_danwei = $("#min_danwei_"+i).val();
+                            if(isNaN(min_capacity)){
+                                layer.msg("请输入最小值！");
+                                $("#min_id_"+i).focus();
+                                return false;
+                            }
+                            if(isNaN(max_capacity)){
+                                layer.msg("请输入最大值！");
+                                $("#max_id_"+i).focus();
+                                return false;
+                            }
+                            if(min_danwei=='G'){
+                                min_capacity = min_capacity*1000;
+                            }else if(min_danwei=='T'){
+                                min_capacity = min_capacity*1000*1000;
+                            }else{
+                                min_capacity = min_capacity;
+                            }
+                            if(max_danwei=='G'){
+                                max_capacity = max_capacity*1000;
+                            }else if(max_danwei=='T'){
+                                max_capacity = max_capacity*1000*1000;
+                            }else{
+                                max_capacity = max_capacity;
+                            }           
+                            if(min_capacity>=max_capacity){
+                                layer.msg("最小值必须小于最大值！");
+                                $("#min_id_"+i).focus();
+                                return false;
+                            }
+                        }
+                    },
+                    success:function (data) {
+                       layer.msg("我在提交表单成功之后被调用"); 
+                       if(data.status == 1){
+                            layer.msg(data.msg,{icon:6,time:1000});                            
+                            var index = parent.layer.getFrameIndex(window.name);  
+                            setTimeout(layer.close(layer.index),20000);                          
+                            setTimeout(parent.layer.close(index),20000);
+                        }else{
+                            layer.msg(data.msg,{shift: 6,icon:5});
+                        }
+                    },
+                    error : function(XMLHttpRequest, textStatus, errorThrown) {
+                        layer.msg('网络失败', {time: 1000});
+                    }
+                });
+
+                /*$.ajax({
                     url:"{{url('/types/store')}}",
                     data:$('form').serialize(),
                     type:'post',
                     dataType:'json',
+                    contentType:false,// 当有文件要上传时，此项是必须的，否则后台无法识别文件流的起始位置
+                    //processData: false,// 是否序列化data属性，默认true(注意：false时type必须是post
                     //mimeType:"multipart/form-data",
                     success:function(res){
                         console.log(res);
@@ -498,7 +523,7 @@
                         layer.msg('网络失败', {time: 1000});
                     }
                 });
-                return false;
+                return false;*/
             
         }
 </script>
