@@ -71,6 +71,24 @@ function errorLog($message,$file)
        error_log($message."\n\n", 3,$file); 
     }   
 }
+
+ function upload($file){
+        //$file = $request['picfile'];
+        if(in_array(strtolower($file->extension()),['jpg','png','gif','jpeg','gpeg'])){
+//          3.获取文件
+ 
+//          4.将文件取一个新的名字
+            $newName = 'games'.time().rand(100000, 999999).$file->getClientOriginalName();
+//           5.移动文件,并修改名字
+            $date = date('Y-m-d');
+            $file->move(public_path().'/uploads/'.$date.'/',$newName);
+            $img_path = '/uploads/'.$date.'/'.$newName;
+            return $img_path;               
+        }else{
+            return "";
+        }
+
+    }
 /**
 *   将中文转成成英文的字符长度
 */

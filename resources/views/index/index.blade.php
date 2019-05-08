@@ -17,7 +17,7 @@
     .jcConBtn{position:absolute;top:0;left:0;width:88%;height:150px;cursor:pointer;background:#ddd;border-radius: 5px;}
     .divrel {float:left;position:relative; width:52px; height:52px;margin-right: 10px;}
 .radio {display:none}
-.divs {display: inline;border-radius:15px; position:absolute; left:0; top:0;width:52px; height:52px;color:#fff;text-align: center;line-height: 50px;}
+.divs {display: inline;border-radius:15px; position:absolute; left:0; top:38px;width:52px; height:52px;color:#000;text-align: center;line-height: 50px;}
 .divimg{display: inline;border-radius:15px;}
 .divimgnone{border-radius:15px;display: none;}
 
@@ -84,14 +84,14 @@
               <span style="color: #FF0000;font-size: 18px;">{{$tlist['type_name']}}</span> -->
               <div class="divrel" onclick="getfun(this.id)" id="{{$tlist['id']}}">
                 <input type="radio" value= "{{$tlist['type_name']}}" id="radio_{{$tlist['id']}}" name="machtype"  class="radio" onchange="typeChange('{{$tlist['type_name']}}-{{$tlist['id']}}')">
-                <div  class="divs" id="{{$tlist['id']}}">{{$tlist['type_name']}}</div><img src="/static/index/images/c02.png" width="52" height="52" class="divimg" id='1'/><img src="/static/index/images/c04.png" width="52" height="52" class="divimgnone" />
+                <div  class="divs" id="{{$tlist['id']}}">{{$tlist['type_name']}}</div><img src="{{$tlist['picfile']}}" width="52" height="52" class="divimg" id='1'/><img src="{{$tlist['checkedpicfile']}}" width="52" height="52" class="divimgnone" />
               </div>
               @endforeach
               	</td>
               </tr>
 
           </table>					
-          <table id="tabcardtype" width="100%" border="0" align="left" cellpadding="0" style="margin:0 auto;">
+          <table id="tabcardtype" width="100%" border="0" align="left" cellpadding="0" style="margin-top:20px;">
           	<tr id = 'cardtypetr'>
             	<td style="text-align:left;padding-left:5px;" colspan="2">
             	<span style="color: #FF0000;font-size: 18px;">请先选择卡片类型:</span></td>

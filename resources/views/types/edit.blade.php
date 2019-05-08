@@ -35,7 +35,7 @@
 </head>
 <body>
 <div class="wrap-container">
-    <form class="layui-form" style="width: 100%;padding-top: 20px;padding-right: 10px;" enctype="multipart/form-data" method="post" action="{{url('/types/store')}}" id="ajaxForm">
+    <form class="layui-form" style="width: 100%;padding-top: 20px;padding-right: 10px;"  method="post" action="{{url('/types/store')}}" id="ajaxForm">
         {{ csrf_field() }}
         <div class="layui-form-item">
         <label class="layui-form-label">机型名称:</label>
@@ -49,16 +49,22 @@
         <label class="layui-form-label">容量区间:</label><span onclick="add()" class="spanbutton"><i class="layui-icon">&#xe654;</i></span>
     </div>
 
-    <div class="layui-form-item">
-        <input type="file" id="chooseImage" name="picfile">
-            <!-- 保存用户自定义的背景图片 -->
-        <img id="cropedBigImg" value='custom' alt="lorem ipsum dolor sit" data-address='' title="自定义背景"/>
+    <div class="layui-form-item">    
+        <label class="layui-form-label">未选中图片:</label>
+        <div class="layui-input-block">
+            <input type="file" id="chooseImage" name="picfile">
+                <!-- 保存用户自定义的背景图片 -->
+            <img id="cropedBigImg" value="{{$info['picfile'] or ''}}" alt="lorem ipsum dolor sit" src="{{$info['picfile'] or ''}}" title="自定义背景"/>
+        </div>
     </div>
 
-    <div class="layui-form-item">
-        <input type="file" id="chooseImage1" name="checkedpicfile">
-            <!-- 保存用户自定义的背景图片 -->
-        <img id="cropedBigImg1" value='custom' alt="lorem ipsum dolor sit" data-address='' title="自定义背景"/>
+   <div class="layui-form-item">    
+        <label class="layui-form-label">选中图片:</label>
+        <div class="layui-input-block">
+            <input type="file" id="chooseImage1" name="checkedpicfile">
+                <!-- 保存用户自定义的背景图片 -->
+            <img id="cropedBigImg1" value="{{$info['checkedpicfile'] or ''}}" alt="lorem ipsum dolor sit" src="{{$info['checkedpicfile'] or ''}}" title="自定义背景"/>
+        </div>
     </div>
 
     <div class="layui-form-item"> 
@@ -444,59 +450,56 @@
     //form表单异步提交
     function submit1(){ 
         var item = parseInt($("#content").val());
-        /**/
+        for(var i=0;i<item;i++){
+            max_capacity = parseFloat($("#max_id_"+i).val());
+            min_capacity =  parseFloat($("#min_id_"+i).val());
+            max_danwei= $("#max_danwei_"+i).val();
+            min_danwei = $("#min_danwei_"+i).val();
+            if(isNaN(min_capacity)){
+                layer.msg("请输入最小值！");
+                $("#min_id_"+i).focus();
+                return false;
+            }
+            if(isNaN(max_capacity)){
+                layer.msg("请输入最大值！");
+                $("#max_id_"+i).focus();
+                return false;
+            }
+            if(min_danwei=='G'){
+                min_capacity = min_capacity*1000;
+            }else if(min_danwei=='T'){
+                min_capacity = min_capacity*1000*1000;
+            }else{
+                min_capacity = min_capacity;
+            }
+            if(max_danwei=='G'){
+                max_capacity = max_capacity*1000;
+            }else if(max_danwei=='T'){
+                max_capacity = max_capacity*1000*1000;
+            }else{
+                max_capacity = max_capacity;
+            }           
+            if(min_capacity>=max_capacity){
+                layer.msg("最小值必须小于最大值！");
+                $("#min_id_"+i).focus();
+                return false;
+            }
+        }
+        /*form表单提交*/
         $("#ajaxForm").ajaxSubmit({
-                    beforeSubmit:function () {
-                       layer.msg("我在提交表单之前被调用！");
-                       for(var i=0;i<=item;i++){
-                            max_capacity = parseFloat($("#max_id_"+i).val());
-                            min_capacity =  parseFloat($("#min_id_"+i).val());
-                            max_danwei= $("#max_danwei_"+i).val();
-                            min_danwei = $("#min_danwei_"+i).val();
-                            if(isNaN(min_capacity)){
-                                layer.msg("请输入最小值！");
-                                $("#min_id_"+i).focus();
-                                return false;
-                            }
-                            if(isNaN(max_capacity)){
-                                layer.msg("请输入最大值！");
-                                $("#max_id_"+i).focus();
-                                return false;
-                            }
-                            if(min_danwei=='G'){
-                                min_capacity = min_capacity*1000;
-                            }else if(min_danwei=='T'){
-                                min_capacity = min_capacity*1000*1000;
-                            }else{
-                                min_capacity = min_capacity;
-                            }
-                            if(max_danwei=='G'){
-                                max_capacity = max_capacity*1000;
-                            }else if(max_danwei=='T'){
-                                max_capacity = max_capacity*1000*1000;
-                            }else{
-                                max_capacity = max_capacity;
-                            }           
-                            if(min_capacity>=max_capacity){
-                                layer.msg("最小值必须小于最大值！");
-                                $("#min_id_"+i).focus();
-                                return false;
-                            }
-                        }
-                    },
+                    type:"post",
+                    dataType : "json",
                     success:function (data) {
-                       layer.msg("我在提交表单成功之后被调用"); 
+                        console.log("我在提交表单成功之后被调用");
+                       console.log(data); 
                        if(data.status == 1){
-                            layer.msg(data.msg,{icon:6,time:1000});                            
+                            layer.msg(data.msg,{icon:6,time:10000});                            
                             var index = parent.layer.getFrameIndex(window.name);  
                             setTimeout(layer.close(layer.index),20000);                          
                             setTimeout(parent.layer.close(index),20000);
                         }else{
                             layer.msg(data.msg,{shift: 6,icon:5});
                         }
-                    },
-                    error : function(XMLHttpRequest, textStatus, errorThrown) {
-                        layer.msg('网络失败', {time: 1000});
                     }
                 });
 
