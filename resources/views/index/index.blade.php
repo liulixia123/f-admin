@@ -107,7 +107,7 @@
             @endforeach
           	
             </table>
-        </div>
+      </div>
         
         <div>可以选择的游戏信息</div>
         <div class="biaoti">
@@ -117,7 +117,8 @@
           <span class="spandiv yuyuan">语言</span>
           <span class="spandiv capacity">容量</span>
         </div>
-        @foreach($games as $game)
+        <div style="max-height: 500px;overflow-y: scroll;">
+            @foreach($games as $game)
               <div id="row_{{$game['id']}}" class="div1">
                 <span class="spandiv xuan" ><input type="checkbox"  name="selarray[]" id="box{{$game['id']}}" value="{{$game['id']}}" onChange='check()'  onclick="update()"  class="gcs-checkbox"/><label for="box{{$game['id']}}"></label></span>
                 <span  class="spandiv bianhao">{{$game['number']}}</span>
@@ -126,6 +127,7 @@
                 <span class="spandiv capacity" id="gb_{{$game['id']}}">{{$game['size_range']}}{{$game['danwei']}}B</span>
               </div>
             @endforeach
+        <div>
 				</div>
 			</section>
 			
