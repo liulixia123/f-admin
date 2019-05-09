@@ -110,7 +110,7 @@
       </div>
         
         <div>可以选择的游戏信息</div>
-        <div class="biaoti">
+        <div class="biaoti boxbiao">
           <span class="spandiv xuan"></span>
           <span class="spandiv bianhao">编号</span>
           <span class="spandiv name">名称</span>
