@@ -23,6 +23,7 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
     Route::get('/',                     'HomeController@index');
     Route::get('/gewt',                 'HomeController@configr');
     Route::get('/index',                'HomeController@welcome');
+    Route::post('/getInfo',             'HomeController@getInfo');
     Route::post('/sort',                'HomeController@changeSort');
     Route::resource('/menus',           'MenuController');
     Route::resource('/logs',            'LogController');

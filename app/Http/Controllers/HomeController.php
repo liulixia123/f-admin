@@ -80,4 +80,8 @@ class HomeController extends BaseController
         $orders_info['total'] = $total;
         return $orders_info;
     }
+
+    public function getInfo(Request $request){
+        return ['code'=>0,'orders_info'=>$this->getorderInfo()];
+    }
 }

@@ -96,5 +96,22 @@
 </div>
 <script src="static/admin/layui/layui.js" type="text/javascript" charset="utf-8"></script>
 <script src="static/admin/lib/echarts/echarts.js"></script>
+<script type="text/javascript">
+window.onload = function() {
+    //假设这里每个五分钟执行一次test函数 
+    getInfo();
+    
+}
+function getInfo() {
+    setTimeout(getInfo, 1000 * 60 * 5); //这里的1000表示1秒有1000毫秒,1分钟有60秒,5表示总共5分钟 
+    $.post("{{url('/getInfo')}}",{_token:"{{ csrf_token() }}"} function(data) {
+        if (data.code == 0) {
+            $(".color-org").innerHTML = data[orders_info][unum];
+            $(".color-blue").innerHTML = data[orders_info][day];
+            $(".color-green").innerHTML = data[orders_info][total];
+        }
+    },'json');
+}
+</script>
 </body>
 </html>
