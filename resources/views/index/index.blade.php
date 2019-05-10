@@ -12,9 +12,8 @@
 		<script type="text/javascript" src="https://cdn.bootcss.com/layer/3.1.0/layer.js"></script>
 		<script type="text/javascript" src="/static/index/jQuery-jcContact.js"></script>
 		<style type="text/css">
-    .jcContact{position:absolute;top:0;left:0;z-index:99;width:215px;}
-    .jcConraper{width:174px;background:#ddd;overflow:hidden;top:100px;border-radius: 5px;}
-    .jcConBtn{position:absolute;top:0;left:0;width:88%;height:150px;cursor:pointer;background:#ddd;border-radius: 5px;}
+    
+    .jcConBtn{float:right;z-index: 6;position:fixed;top:100px;right:10px;width:30%;height:150px;cursor:pointer;background:#ddd;border-radius: 5px;}
     .divrel {float:left;position:relative; width:52px; height:52px;margin-right: 10px;}
 .radio {display:none}
 .divs {display: inline;border-radius:15px; position:absolute; left:0; top:38px;width:52px; height:52px;color:#000;text-align: center;line-height: 50px;}
@@ -36,13 +35,7 @@
 </style>
 </head>
 <body>
-	<div class="wrapper">		
-    <div id="demo2" class="jcContact">
-     <div class="jcConraper">
-         <!-- 自定义部分 -->
-         
-         <!-- 自定义部分 结束 -->
-     </div>
+	<div class="wrapper">   
      <div class="jcConBtn">
         <table width="100%" border="0" align="left" cellpadding="0" style="margin:0 auto;" cellspacing="1">
         <tr>
@@ -68,7 +61,7 @@
             </tr>
         </table>
       </div>
-    </div>
+    
 		<section class="main" id="groupForm">
 			<div class="DeInfo_Inpet DeInfo_Inpet2">
 				<div style="width:100%; height:95px; left:0;top:0;">
@@ -132,22 +125,24 @@
 			</section>
 			
 		</div>
-	<script>
-$(function(){
-
-   
-  
-  $('#demo2').jcContact({
-    speed:700,
-    position:'top',
-    posOffsetY : 55,
-    btnPosition : 'top',
-    btnPosoffsetY : 44 ,
-    float:'right',
-    Event : "click"       
-  });  
-  
-});
+<script>
+var sh,wh3,nowlocal;
+    $(window).scroll(function(){
+            //鼠标滚动的时候获取滚动条的距离页面底部的距离
+        sh = $(window).scrollTop();
+        wh = $(window).height();        
+        //获取屏幕高度的三分一
+        wh3 = $(window).height()/3;
+        //滚动条的高度+屏幕上边三分之一的距离=当前的div一直在屏幕距离窗口上边的位置
+        nowlocal = sh/3;
+        if(sh>=0&&sh<wh){
+          nowlocal=150+sh/4;
+        }else{
+          nowlocal=sh/4-150;
+        }
+        //设置距离，滚动时会有先上去再下来到原来位置的效果
+        $('.jcConBtn').animate({top:nowlocal},20);
+    });
 </script>	
 <script type="text/javascript">
 
