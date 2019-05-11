@@ -13,19 +13,21 @@
 		<script type="text/javascript" src="/static/index/jQuery-jcContact.js"></script>
 		<style type="text/css">
     
-    .jcConBtn{float:right;z-index: 6;position:fixed;top:100px;right:10px;width:30%;height:150px;cursor:pointer;background:#ddd;border-radius: 5px;}
-    .divrel {float:left;position:relative; width:52px; height:52px;margin-right: 10px;}
+    .jcConBtn{float:right;z-index: 6;position:fixed;top:192px;right:5px;width:50%;height:150px;cursor:pointer;background-color:rgba(255,215,0,0.9);border-radius: 5px;}
+    
+    .divrel {float:left;position:relative; width:70px; height:52px;margin-right: 10px;margin-bottom: 23px;}
 .radio {display:none}
-.divs {display: inline;border-radius:15px; position:absolute; left:0; top:38px;width:52px; height:52px;color:#000;text-align: center;line-height: 50px;}
-.divimg{display: inline;border-radius:15px;}
-.divimgnone{border-radius:15px;display: none;}
+.divs {display: inline;border-radius:6px; position:absolute; left:0; top:38px;width:70px; height:52px;color:#000;text-align: center;line-height: 50px;font-size: 14px;}
+.divimg{display: inline;border-radius:6px;}
+.divimgnone{border-radius:6px;display: none;}
 
      
 <!--
 .STYLE1 {
 	color: #000000;
-	font-size: 8px;
-	font-weight: bold;
+	font-size: 14px;
+	
+  margin-top:5px;
 }
 .STYLE2 {
 	color: #ff0000;
@@ -35,96 +37,104 @@
 </style>
 </head>
 <body>
-	<div class="wrapper">   
-     <div class="jcConBtn">
+	<div class="wrapper">  
+    <div class="title"><h1>自 选 游 戏</h1></div> 
+    <div class="jcConBtn">
         <table width="100%" border="0" align="left" cellpadding="0" style="margin:0 auto;" cellspacing="1">
         <tr>
-        <td width="60%" style="text-align:left;padding-left:5px;"><span class="STYLE1">卡片实际容量:<span id="mycardrl">0</span></span></td>
-        <td rowspan="3" style="text-align:center;">
-          
-          <input id="typeid" type="hidden" value=""/>
-          <input id="card" type="hidden" value=""/>
-          <input id="gameid" type="hidden" value=""/>
-          </td>
+        <td width="100%" style="text-align:left;padding-left:5px;padding-top:5px;"><span class="STYLE1">卡片容量:<span id="mycardrl">0</span></span></td>        
         </tr>
         <tr>
-        <td style="text-align:left;padding-left:5px;"><span class="STYLE1">已选游戏总容量:<span id="selrlsum">0</span></span></td>
+        <td width="100%"  style="text-align:left;padding-left:5px;padding-top:5px;"><span class="STYLE1">已选容量:<span id="selrlsum">0</span></span></td>
         </tr>
         <tr>
-        <td style="text-align:left;padding-left:5px;"><span class="STYLE1">卡片剩余容量:<span id="havecardrl">0</span></span></td>
+        <td  width="100%" style="text-align:left;padding-left:5px;padding-top:5px;"><span class="STYLE1">剩余容量:<span id="havecardrl">0</span></span></td>
         </tr>
             <tr>
-            <td style="text-align:left;padding-left:5px;"><span class="STYLE1">填写手机号:<input type="text" name="mobile" id="mobile" placeholder="请填写收货手机号码" class="DeInfo_text" data-regtest="^1[3|4|5|7|8]\d{9}$ "></td>
+            <td width="100%" style="text-align:left;padding-left:5px;padding-top:5px;"><input type="text" name="mobile" id="mobile" placeholder="请填写收货手机号码" class="DeInfo_text" data-regtest="^1[3|4|5|7|8]\d{9}$ "></td>
             </tr>
             <tr>
-              <td><button class="BigBtn2" id="selover" onclick="order()">选好提交</button></td>
+              <td width="100%" style="text-align:center;padding-left:5px;padding-top:5px;"><button class="BigBtn2" id="selover" onclick="order()">选好提交</button></td>
             </tr>
         </table>
-      </div>
+    </div>
     
 		<section class="main" id="groupForm">
 			<div class="DeInfo_Inpet DeInfo_Inpet2">
-				<div style="width:100%; height:95px; left:0;top:0;">
-          <table width="100%" border="0" align="left" cellpadding="0" style="margin:0 auto;" cellspacing="1">
-          	<tr>
-          	<td style="text-align:left;padding-left:5px;" colspan="2">
-          	<span style="color: #FF0000;font-size: 18px;">请先选择游戏机型:</span></td></tr>
-          	<tr>
-              
-              <td style="text-align:left;padding-left:15px;" colspan="2">
-              @foreach($typelist as $tlist)  
-              <!-- <input id="machtype" name="machtype" type="radio" value="{{$tlist['type_name']}}" onchange="typeChange('{{$tlist['type_name']}}-{{$tlist['id']}}')"  style="height:20px;width:20px;" {{(isset($tlist['id'])&&$tlist['id'] == $id) ? 'checked' : ''}}/>
-              <span style="color: #FF0000;font-size: 18px;">{{$tlist['type_name']}}</span> -->
-              <div class="divrel" onclick="getfun(this.id)" id="{{$tlist['id']}}">
-                <input type="radio" value= "{{$tlist['type_name']}}" id="radio_{{$tlist['id']}}" name="machtype"  class="radio" onchange="typeChange('{{$tlist['type_name']}}-{{$tlist['id']}}')">
-                <div  class="divs" id="{{$tlist['id']}}">{{$tlist['type_name']}}</div><img src="{{$tlist['picfile']}}" width="52" height="52" class="divimg" id='1'/><img src="{{$tlist['checkedpicfile']}}" width="52" height="52" class="divimgnone" />
-              </div>
-              @endforeach
-              	</td>
-              </tr>
+				<div style="width:100%; left:0;top:0;">
 
-          </table>					
-          <table id="tabcardtype" width="100%" border="0" align="left" cellpadding="0" style="margin-top:20px;">
-          	<tr id = 'cardtypetr'>
-            	<td style="text-align:left;padding-left:5px;" colspan="2">
-            	<span style="color: #FF0000;font-size: 18px;">请先选择卡片类型:</span></td>
-            </tr>
-            
-          	@foreach($card_type as $ctype)
-          	<tr class = "cardtypediv"> 
-              <td class="cardtd">
-              <input id="cardtype" name="cardtype" type="radio" value="{{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B" onchange="cardClick('{{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B')"/>
-            	<span class="spantd">{{$ctype['max_capacity']}}{{$ctype['max_capacity_danwei']}}B={{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B</span>
-              </td>
-            </tr> 
-            @endforeach
-          	
-            </table>
-      </div>
-        
-        <div>可以选择的游戏信息</div>
-        <div class="biaoti boxbiao">
-          <span class="spandiv xuan"></span>
-          <span class="spandiv bianhao">编号</span>
-          <span class="spandiv name">名称</span>
-          <span class="spandiv yuyuan">语言</span>
-          <span class="spandiv capacity">容量</span>
+          <div class="tabtype">
+            <table width="100%" border="0" align="left" cellpadding="0" style="margin:0 auto;" cellspacing="1">
+            	<tr>
+            	<td style="text-align:left;padding-left:5px;height: 40px;" colspan="2">
+            	<span style="color: #666666;font-size: 16px;font-weight: bold;">游戏机类型:</span></td></tr>
+            	<tr>
+                
+                <td style="text-align:left;padding-left:15px;" colspan="2">
+                @foreach($typelist as $tlist)  
+                <!-- <input id="machtype" name="machtype" type="radio" value="{{$tlist['type_name']}}" onchange="typeChange('{{$tlist['type_name']}}-{{$tlist['id']}}')"  style="height:20px;width:20px;" {{(isset($tlist['id'])&&$tlist['id'] == $id) ? 'checked' : ''}}/>
+                <span style="color: #FF0000;font-size: 18px;">{{$tlist['type_name']}}</span> -->
+                <div class="divrel" onclick="getfun(this.id)" id="{{$tlist['id']}}">
+                  <input type="radio" value= "{{$tlist['type_name']}}" id="radio_{{$tlist['id']}}" name="machtype"  class="radio" onchange="typeChange('{{$tlist['type_name']}}-{{$tlist['id']}}')">
+                  <div  class="divs" id="{{$tlist['id']}}">{{$tlist['type_name']}}</div><img src="{{$tlist['picfile']}}" width="70" height="52" class="divimg" id='1'/><img src="{{$tlist['checkedpicfile']}}" width="70" height="52" class="divimgnone" />
+                </div>
+                @endforeach
+                	</td>
+                </tr>
+
+            </table>	
+          </div>
+
+          <div class="tabcapy">				
+            <table id="tabcardtype" width="100%" border="0" align="left" cellpadding="0" height="100%">
+            	<tr id = 'cardtypetr'>
+              	<td style="text-align:left;padding-left:5px; height: 40px;" colspan="2">
+              	<span style="color: #666666;font-size: 16px;font-weight: bold; ">卡片容量:</span></td>
+              </tr>
+              
+            	@foreach($card_type as $ctype)
+            	<tr class = "cardtypediv"> 
+                <td class="cardtd">
+                <input id="{{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B" name="cardtype" type="radio" value="{{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B" onchange="cardClick('{{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B')" class="gcs-radio"/><label for="{{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B"></label> 
+              	<span class="spantd">{{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B ~ {{$ctype['max_capacity']}}{{$ctype['max_capacity_danwei']}}B</span>
+                </td>
+              </tr> 
+              @endforeach
+            	
+              </table>
+          </div>
+
         </div>
-        <div style="max-height: 500px;overflow-y: scroll;">
+
+        <div class="biaoti boxbiao">
+          <div class="pfloat1">
+            <p>选择</p> 
+          </div>
+          <div class="pfloat2">
+            <p>名称</p>
+          </div>
+          <div class="pfloat3">
+            <p>语言</p>
+          </div>
+          <div class="pfloat4">
+             <p>容量</p>
+          </div>
+        </div>
+
+        <div>
             @foreach($games as $game)
               <div id="row_{{$game['id']}}" class="div1">
-                <span class="spandiv xuan" ><input type="checkbox"  name="selarray[]" id="box{{$game['id']}}" value="{{$game['id']}}" onChange='check()'  onclick="update()"  class="gcs-checkbox"/><label for="box{{$game['id']}}"></label></span>
-                <span  class="spandiv bianhao">{{$game['number']}}</span>
-                <span  class="spandiv name">{{$game['game_name']}}</span>
-                <span  class="spandiv yuyan">{{$game['language']}}</span>
-                <span class="spandiv capacity" id="gb_{{$game['id']}}">{{$game['size_range']}}{{$game['danwei']}}B</span>
+                <p class="spandiv xuan" ><input type="checkbox"  name="selarray[]" id="box{{$game['id']}}" value="{{$game['id']}}" onChange='check()'  onclick="update()"  class="gcs-checkbox"/><label for="box{{$game['id']}}"></label></p>               
+                <p  class="spandiv name">{{$game['game_name']}}</p>
+                <p  class="spandiv yuyan">{{$game['language']}}</p>
+                <p class="spandiv capacity" id="gb_{{$game['id']}}">{{$game['size_range']}}{{$game['danwei']}}B</p>
               </div>
             @endforeach
-        <div>
+        </div>
 				</div>
 			</section>
 			
-		</div>
+	</div>
 <script>
 var sh,wh3,nowlocal;
     $(window).scroll(function(){
@@ -134,11 +144,12 @@ var sh,wh3,nowlocal;
         //获取屏幕高度的三分一
         wh3 = $(window).height()/3;
         //滚动条的高度+屏幕上边三分之一的距离=当前的div一直在屏幕距离窗口上边的位置
-        nowlocal = sh/3;
-        if(sh>=0&&sh<wh){
-          nowlocal=150+sh/4;
+        nowlocal = sh+wh3;
+        console.log(sh);
+        if(sh>=0&&sh<327){
+          nowlocal=192-sh/4;
         }else{
-          nowlocal=sh/4-150;
+          nowlocal=60;
         }
         //设置距离，滚动时会有先上去再下来到原来位置的效果
         $('.jcConBtn').animate({top:nowlocal},20);
@@ -156,7 +167,7 @@ var sh,wh3,nowlocal;
    function bgcChange(obj)
   {
     obj.onmouseover=function(){
-      obj.style.backgroundColor="#f2f2f2";
+      obj.style.backgroundColor="#dedede";
     }
     obj.onmouseout=function(){
       obj.style.backgroundColor="#fff";
@@ -165,10 +176,10 @@ var sh,wh3,nowlocal;
   function notbgcChange(obj)
   {
     obj.onmouseover=function(){
-      obj.style.backgroundColor="#f5bb1c";
+      obj.style.backgroundColor="#ff7f50";
     }
     obj.onmouseout=function(){
-      obj.style.backgroundColor="#f5bb1c";
+      obj.style.backgroundColor="#ff7f50";
     }
   }
   //复选框选择的行变色
@@ -193,7 +204,7 @@ var sh,wh3,nowlocal;
  
   $(':checkbox:checked').each(function(){   
     var par_node=document.getElementById(this.id).parentNode.parentNode;
-    document.getElementById(par_node.id).style.background="#f5bb1c";
+    document.getElementById(par_node.id).style.background="#ff7f50";
     document.getElementById(par_node.id).style.color="#ffffff";//控制tr的字体色
     //document.getElementById(par_node.id).onunbind('mouseenter');
     //document.getElementById(par_node.id).onunbind('mouseleave');
@@ -266,18 +277,23 @@ var sh,wh3,nowlocal;
   //插入卡片类型表格元素
   function getDataRow(h){
     var row = document.createElement('tr');
+    row.className ="cardtypediv";
     var td = document.createElement('td');
     td.className = "cardtd";
     var tdinput = document.createElement('input');
         tdinput.setAttribute('type','radio');
-        tdinput.setAttribute('id','cardtype');
+        tdinput.setAttribute('id',h.min_capacity+h.min_capacity_danwei+'B');
         tdinput.setAttribute('name','cardtype');
+        tdinput.setAttribute('class','gcs-radio');
         tdinput.setAttribute('value',h.min_capacity+h.min_capacity_danwei+'B');
         tdinput.setAttribute('onchange','cardClick("'+h.min_capacity+h.min_capacity_danwei+'B'+'")'); 
+    var label = document.createElement('label');        
+        label.setAttribute('for',h.min_capacity+h.min_capacity_danwei+'B'); 
     var spantd = document.createElement('span'); 
         spantd.className = "spantd"; 
-        spantd.innerHTML= h.max_capacity+h.max_capacity_danwei+'='+h.min_capacity+h.min_capacity_danwei;
+        spantd.innerHTML= h.min_capacity+h.min_capacity_danwei+' ~ '+h.max_capacity+h.max_capacity_danwei;
     td.appendChild(tdinput);
+    td.appendChild(label);
     td.appendChild(spantd);    
     row.appendChild(td);
     return row;
@@ -290,7 +306,7 @@ var sh,wh3,nowlocal;
     var row = document.createElement('div');
         row.id = "row_"+h.id;
         row.className = "div1";
-    var xuanspan = document.createElement('span'); 
+    var xuanspan = document.createElement('p'); 
         xuanspan.className = "spandiv xuan";   
     var tdinput = document.createElement('input');
         tdinput.setAttribute('type','checkbox');
@@ -306,19 +322,15 @@ var sh,wh3,nowlocal;
     xuanspan.appendChild(tdinput); 
     xuanspan.appendChild(label); 
     row.appendChild(xuanspan);
-   var biaohaospan = document.createElement('span'); 
-       biaohaospan.className = "spandiv bianhao";
-      biaohaospan.innerHTML = h.number;
-    row.appendChild(biaohaospan);
-    var namespan = document.createElement('span'); 
+    var namespan = document.createElement('p'); 
         namespan.className = "spandiv name";
         namespan.innerHTML = h.game_name;
     row.appendChild(namespan);
-    var language = document.createElement('span');
+    var language = document.createElement('p');
         language.className = "spandiv yuyan";
         language.innerHTML = h.language;        
     row.appendChild(language);
-    var size_range = document.createElement('span');
+    var size_range = document.createElement('p');
         size_range.className = "spandiv capacity";
         size_range.id ='gb_'+h.id;
         size_range.innerHTML = h.size_range+h.danwei+"B";     
@@ -329,6 +341,25 @@ var sh,wh3,nowlocal;
   function cardClick(s){
 
       $("#mycardrl").text(s);
+      carddanwei = s.substr(s.length-2,2);              
+    cardsize_range = parseFloat(s.substr(0,s.length-2));
+    cardsize = getDanwei(cardsize_range,carddanwei);
+      var f = 0;
+    $('input[name="selarray[]"]:checked').each(function(){
+          id = $(this).val();
+          str = $("#gb_"+id).text();
+          danwei = str.substr(str.length-2,2);              
+          size_range = parseFloat(str.substr(0,str.length-2));
+          //计算选择游戏的和
+          f += getDanwei(size_range,danwei);        
+          if(f>cardsize){
+            layer.msg("所选游戏超出卡片容量请重新选择");
+            return false;
+          }
+          $("#selrlsum").text(f/1000);
+          havecard = (cardsize-f)/1000;
+          $("#havecardrl").text(havecard);
+        });
   }
   //判断单位大小转换
   function getDanwei(size_range,danwei){
@@ -365,11 +396,12 @@ var sh,wh3,nowlocal;
             layer.msg("所选游戏超出卡片容量请重新选择");
             return false;
           }
-          $("#selrlsum").text(f/1000);
-          havecard = (cardsize-f)/1000;
-          $("#havecardrl").text(havecard);
+          
           chk_value.push($(this).val());
     });
+    $("#selrlsum").text(f/1000);
+          havecard = (cardsize-f)/1000;
+          $("#havecardrl").text(havecard);
     //console.log(chk_value);
   }
 
@@ -392,7 +424,7 @@ var sh,wh3,nowlocal;
       }
       //var typeid = document.getElementById('machtype').value; 
       var typeid = $('input[name="machtype"]:checked').val();     
-      var card = document.getElementById('cardtype').value;
+      var card =  $('input[name="cardtype"]:checked').val();
       carddanwei = card.substr(card.length-2,2);              
       cardsize_range = parseFloat(card.substr(0,card.length-2));
       cardsize = getDanwei(cardsize_range,carddanwei);
@@ -455,7 +487,7 @@ var sh,wh3,nowlocal;
 
    function confirmOrder(){
     var type = $('input[name="machtype"]:checked').val(); 
-    var card = document.getElementById('cardtype').value;
+    var card = $('input[name="cardtype"]:checked').val();
       carddanwei = card.substr(card.length-2,2);              
       cardsize_range = parseFloat(card.substr(0,card.length-2));
       cardsize = getDanwei(cardsize_range,carddanwei);

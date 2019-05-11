@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title>后台登录</title>
+    <title>游戏后台登录</title>
     <link rel="stylesheet" type="text/css" href="/static/admin/layui/css/layui.css" />
     <link rel="stylesheet" type="text/css" href="/static/admin/css/login.css" />
 </head>
@@ -12,7 +12,7 @@
 <body>
 <div class="m-login-bg">
     <div class="m-login">
-        <h3>后台管理系统</h3>
+        <h3>游戏管理系统</h3>
         <div class="m-login-warp">
             <form class="layui-form" method="post" action="{{url('/login')}}">
                 {{ csrf_field() }}
@@ -46,7 +46,7 @@
                 </div>
             </form>
         </div>
-        <p class="copyright">Copyright 2017-{{date("Y",time())}} by FZS</p>
+        <p class="copyright">Copyright &copy; {{date("Y",time())}} by WindfallSheng</p>
     </div>
 </div>
 <script src="/static/admin/layui/layui.js" type="text/javascript" charset="utf-8"></script>
