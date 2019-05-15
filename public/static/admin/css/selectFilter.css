@@ -26,6 +26,79 @@ li {
 	display: none;
 }
 
+.filter-box1 {
+    position: relative;
+}
+
+.filter-box1 select {
+	display: none;
+}
+.filter-box2 {
+    position: relative;
+}
+
+.filter-box2 select {
+	display: none;
+}
+
+.filter-box3 {
+    position: relative;
+}
+
+.filter-box3 select {
+	display: none;
+}
+.filter-box4 {
+    position: relative;
+}
+
+.filter-box4 select {
+	display: none;
+}
+
+.filter-box5 {
+    position: relative;
+}
+
+.filter-box5 select {
+	display: none;
+}
+.filter-box6 {
+    position: relative;
+}
+
+.filter-box6 select {
+	display: none;
+}
+.filter-box7 {
+    position: relative;
+}
+
+.filter-box7 select {
+	display: none;
+}
+
+.filter-box8 {
+    position: relative;
+}
+
+.filter-box8 select {
+	display: none;
+}
+.filter-box9 {
+    position: relative;
+}
+
+.filter-box9 select {
+	display: none;
+}
+.filter-box10 {
+    position: relative;
+}
+
+.filter-box10 select {
+	display: none;
+}
 .filter-text {
 	height: 100%;
 	overflow: hidden;

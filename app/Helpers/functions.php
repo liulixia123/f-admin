@@ -71,7 +71,7 @@ function errorLog($message,$file)
        error_log($message."\n\n", 3,$file); 
     }   
 }
-
+//上传文件
  function upload($file){
         //$file = $request['picfile'];
         if(in_array(strtolower($file->extension()),['jpg','png','gif','jpeg','gpeg'])){
@@ -89,6 +89,62 @@ function errorLog($message,$file)
         }
 
     }
+//获取浏览器信息
+function getBrowser(){
+    $flag=$_SERVER['HTTP_USER_AGENT'];
+    $para=array();
+    
+    // 检查操作系统
+    if(preg_match('/Windows[\d\. \w]*/',$flag, $match)) $para['os']=$match[0];
+    
+    if(preg_match('/Chrome\/[\d\.\w]*/',$flag, $match)){
+        // 检查Chrome
+        $para['browser']=$match[0];
+    }elseif(preg_match('/Safari\/[\d\.\w]*/',$flag, $match)){
+        // 检查Safari
+        $para['browser']=$match[0];
+    }elseif(preg_match('/MSIE [\d\.\w]*/',$flag, $match)){
+        // IE
+        $para['browser']=$match[0];
+    }elseif(preg_match('/Opera\/[\d\.\w]*/',$flag, $match)){
+        // opera
+        $para['browser']=$match[0];
+    }elseif(preg_match('/Firefox\/[\d\.\w]*/',$flag, $match)){
+        // Firefox
+        $para['browser']=$match[0];
+    }elseif(preg_match('/OmniWeb\/(v*)([^\s|;]+)/i',$flag, $match)){
+        //OmniWeb
+        $para['browser']=$match[2];
+    }elseif(preg_match('/Netscape([\d]*)\/([^\s]+)/i',$flag, $match)){
+        //Netscape
+        $para['browser']=$match[2];
+    }elseif(preg_match('/Lynx\/([^\s]+)/i',$flag, $match)){
+        //Lynx
+        $para['browser']=$match[1];
+    }elseif(preg_match('/360SE/i',$flag, $match)){
+        //360SE
+        $para['browser']='360安全浏览器';
+    }elseif(preg_match('/SE 2.x/i',$flag, $match)) {
+        //搜狗
+        $para['browser']='搜狗浏览器';
+    }elseif(preg_match('/like mac os x/i',$flag, $match)) {
+        //IOS终端
+        $para['browser']='ios终端';
+    }elseif(preg_match('/iPhone/i',$flag, $match)) {
+        //iPhone
+        $para['browser']='iPhone';
+    }elseif(preg_match('/MicroMessenger/i',$flag, $match)) {
+        //微信
+        $para['browser']='weixin';
+    }elseif(preg_match('/\sQQ/i',$flag, $match)) {
+        //QQ
+        $para['browser']='QQ';
+    }else{
+        $para['browser']='unkown';
+    }
+    return $para;
+}
+
 /**
 *   将中文转成成英文的字符长度
 */

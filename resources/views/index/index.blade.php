@@ -215,7 +215,8 @@ var sh,wh3,nowlocal;
 
   function getfun(sId){
     var oImg = $(".divs");
-    for (var i = 0; i < oImg.length; i++) {
+    var len = oImg.length;
+    for (var i = 0; i < len; i++) {
       var oldimg = oImg[i].nextSibling.nextSibling.src;         
           var newimg = oImg[i].nextSibling.src;
           if (oImg[i].id == sId) {            
@@ -255,14 +256,16 @@ var sh,wh3,nowlocal;
             $("#tabcardtype tr:not(:first)").remove();
             //添加卡片类型元素
             tab = document.getElementById("tabcardtype");
-            for(var i =0 ;i<typecard.length;i++){
+            typelen = typecard.length;
+            for(var i =0 ;i < typelen;i++){
                 tab.appendChild(getDataRow(typecard[i]));
             }
             //移除table 下的tr
             $(".div1").remove();
             //添加游戏列表元素
             gametable = $(".biaoti:last");
-            for(var i =0 ;i<games.length;i++){
+            gamelen = games.length;
+            for(var i =0 ;i < gamelen;i++){
                 gametable.after(getGameDataRow(games[i]));
             }          
             $("#mycardrl").text(0);
@@ -400,8 +403,8 @@ var sh,wh3,nowlocal;
           chk_value.push($(this).val());
     });
     $("#selrlsum").text(f/1000);
-          havecard = (cardsize-f)/1000;
-          $("#havecardrl").text(havecard);
+    havecard = (cardsize-f)/1000;
+    $("#havecardrl").text(havecard);
     //console.log(chk_value);
   }
 
