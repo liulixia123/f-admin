@@ -13,7 +13,7 @@
 		<script type="text/javascript" src="/static/index/jQuery-jcContact.js"></script>
 		<style type="text/css">
     
-    .jcConBtn{float:right;z-index: 6;position:fixed;top:192px;right:5px;width:50%;height:150px;cursor:pointer;background-color:rgba(255,215,0,0.9);border-radius: 5px;}
+    .jcConBtn{float:right;z-index: 6;position:fixed;top:192px;right:8px;width:50%;height:150px;cursor:pointer;background-color:rgba(255,215,0,0.9);border-radius: 5px;}
     
     .divrel {float:left;position:relative; width:70px; height:52px;margin-right: 10px;margin-bottom: 23px;}
 .radio {display:none}
