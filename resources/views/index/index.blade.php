@@ -125,7 +125,7 @@
             @foreach($games as $game)
               <div id="row_{{$game['id']}}" class="div1">
                 <p class="spandiv xuan" ><input type="checkbox"  name="selarray[]" id="box{{$game['id']}}" value="{{$game['id']}}" onChange='check()'  onclick="update()"  class="gcs-checkbox"/><label for="box{{$game['id']}}"></label></p>               
-                <p  class="spandiv name">{{$game['game_name']}}</p>
+                <p  class="@if(mb_strlen($game['game_name'])>12) spandiv @else spandivn @endif name">{{$game['game_name']}}</p>
                 <p  class="spandiv yuyan">{{$game['language']}}</p>
                 <p class="spandiv capacity" id="gb_{{$game['id']}}">{{$game['size_range']}}{{$game['danwei']}}B</p>
               </div>
