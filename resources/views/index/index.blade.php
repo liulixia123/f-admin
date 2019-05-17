@@ -512,7 +512,7 @@ var sh,wh3,nowlocal;
         layer.msg('已提交成功', {
                   time: 20000, //20s后自动关闭
                 });
-           setTimeout(window.location.href="{{url('/home')}}",3000);
+           setTimeout(window.location.href="{{url('/')}}",3000);
       }else{
         layer.msg('提交失败', {
                   time: 2000, //20s后自动关闭
