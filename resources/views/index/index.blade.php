@@ -124,8 +124,9 @@
         <div>
             @foreach($games as $game)
               <div id="row_{{$game['id']}}" class="div1">
-                <p class="spandiv xuan" ><input type="checkbox"  name="selarray[]" id="box{{$game['id']}}" value="{{$game['id']}}" onChange='check()'  onclick="update()"  class="gcs-checkbox"/><label for="box{{$game['id']}}"></label></p>               
+                <p class="spandiv xuan" ><input type="checkbox"  name="selarray[]" id="box{{$game['id']}}" value="{{$game['id']}}" onChange='check()'  onclick="update()"  class="gcs-checkbox"/><label for="box{{$game['id']}}"></label></p>         
                 <p  class="spandivn name">{{$game['game_name']}}</p>
+                <p  class="@if(mb_strlen($game['game_name'])>12) spandiv @else spandivn @endif name">{{$game['game_name']}}</p>
                 <p  class="spandiv yuyan">{{$game['language']}}</p>
                 <p class="spandiv capacity" id="gb_{{$game['id']}}">{{$game['size_range']}}{{$game['danwei']}}B</p>
               </div>
@@ -512,7 +513,7 @@ var sh,wh3,nowlocal;
         layer.msg('已提交成功', {
                   time: 20000, //20s后自动关闭
                 });
-           setTimeout(window.location.href="{{url('/home')}}",3000);
+           setTimeout(window.location.href="{{url('/')}}",3000);
       }else{
         layer.msg('提交失败', {
                   time: 2000, //20s后自动关闭

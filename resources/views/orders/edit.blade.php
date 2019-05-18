@@ -48,9 +48,9 @@
         @foreach($gamelist as $list)
             <tr>
                 <td>{{$list['id']}}</td>
-                <td>A</td>                 
+                <td>{{$list['number']}}</td>                 
                 <td>{{$list['game_name']}}</td>
-                <td>中文</td>    
+                <td>{{$list['language']}}</td>    
                 <td>{{$list['size_range']}}</td>               
             </tr>
         @endforeach

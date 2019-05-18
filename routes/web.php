@@ -20,9 +20,9 @@ Route::group(['namespace'  => "Auth"], function () {
 });
 //后台主要模块
 Route::group(['middleware' => ['auth', 'permission']], function () {
-    Route::get('/',                     'HomeController@index');
+    Route::get('/admin',                     'HomeController@index');
     Route::get('/gewt',                 'HomeController@configr');
-    Route::get('/index',                'HomeController@welcome');
+    Route::get('/welcome',                'HomeController@welcome');
     Route::post('/getInfo',             'HomeController@getInfo');
     Route::post('/sort',                'HomeController@changeSort');
     Route::resource('/menus',           'MenuController');
@@ -37,7 +37,8 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
     Route::resource('/orders',     'OrdersController');
 });
 //前台首页
-Route::get('/home',                   'IndexController@index');
+Route::get('/',                   'IndexController@index');
+Route::get('/index',                   'IndexController@index');
 Route::get('/home/edit',                   'IndexController@edit');
 Route::get('/home/checkorder',                   'IndexController@checkorder');
 Route::get('/home/confirm',                   'IndexController@confirmOrder');

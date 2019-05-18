@@ -28,7 +28,7 @@ class TypesController extends BaseController
                  $maxrange = $val['max_capacity'];
                  $mindanwei = $val['min_capacity_danwei'];
                  $maxdanwei = $val['max_capacity_danwei'];
-                 $rangearr[$k] = $minrange.$mindanwei.'-'.$maxrange.$maxdanwei;
+                 $rangearr[$k] = $minrange.$mindanwei.' ~ '.$maxrange.$maxdanwei;
             }
             $list[$key]['card_range'] = implode(',',$rangearr);
         }
