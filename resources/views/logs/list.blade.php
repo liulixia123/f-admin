@@ -38,6 +38,7 @@
             <th>内容</th>
             <th class="hidden-xs">URL</th>
             <th class="hidden-xs">IP</th>
+            <th class="hidden-xs">设备</th>
             <th>创建时间</th>
         </tr>
         </thead>
@@ -49,6 +50,7 @@
                 <td>{{$list['log_info']}}</td>
                 <td class="hidden-xs">{{$list['log_url']}}</td>
                 <td class="hidden-xs">{{$list['log_ip']}}</td>
+                <td class="hidden-xs">{{$list['os_broswer']}}</td>
                 <td>{{$list['log_time']}}</td>
             </tr>
         @endforeach

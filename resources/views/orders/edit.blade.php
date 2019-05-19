@@ -1,57 +1,53 @@
 @section('title', '订单编辑')
 @section('content')
     <div class="layui-form-item">
-        <label class="layui-form-label">订单号</label>
+        <label class="layui-form-label">订单号:</label>
         <div class="layui-input-block">
             <input type="text" value="{{$info['order_num'] or ''}}" name="order_num" required readonly="readonly" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">用户手机号</label>
+        <label class="layui-form-label">用户手机号:</label>
         <div class="layui-input-block">
             <input type="text" value="{{$info['mobile'] or ''}}" name="mobile" required readonly="readonly" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">所选机型</label>
+        <label class="layui-form-label">所选机型:</label>
         <div class="layui-input-block">
             <input type="text" value="{{$info['type_name'] or ''}}" name="type_name" required lay-verify="type_name" placeholder="请输入2-12位字母或汉字" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">卡片容量</label>
+        <label class="layui-form-label">卡片容量:</label>
         <div class="layui-input-block">
             <input type="text" value="{{$info['card_range'] or ''}}" name="type_name" required lay-verify="type_name" placeholder="请输入2-12位字母或汉字" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">游戏列表</label>
-        <table class="layui-table" lay-even lay-skin="nob" style="margin: 10px 37px !important;">
+        <label class="layui-form-label">游戏列表:</label>
+        <table class="layui-table" lay-even lay-skin="nob" style="margin: 10px 6px !important;">
         <colgroup>
-            <col  width="150">
-            <col  width="200">
-            <col  width="550">          
-            <col  width="250">
-            <col  width="150">
-            <col  width="100">
+            <col  width="17%">
+            <col  width="49%">
+            <col  width="17%">          
+            <col  width="17%">            
         </colgroup>
         <thead>
         <tr>
-            <th>游戏ID</th>
-            <th>编号</th>
-            <th>游戏名称</th>
-            <th>语言</th>
-            <th>容量</th>            
+            <th width="17%">游戏ID</th>            
+            <th width="49%">游戏名称</th>
+            <th width="17%">语言</th>
+            <th width="17%">容量</th>            
         </tr>
         </thead>
         <tbody>
         @foreach($gamelist as $list)
             <tr>
-                <td>{{$list['id']}}</td>
-                <td>{{$list['number']}}</td>                 
+                <td>{{$list['id']}}</td>                              
                 <td>{{$list['game_name']}}</td>
                 <td>{{$list['language']}}</td>    
-                <td>{{$list['size_range']}}</td>               
+                <td>{{$list['size_range']}}{{$list['danwei']}}B</td>               
             </tr>
         @endforeach
         </tbody>

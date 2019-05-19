@@ -10,6 +10,7 @@
 
 li {
 	list-style: none;
+	border: 0.1px solid #f2f2f2;
 }
 
 .filter-disabled {
@@ -18,11 +19,11 @@ li {
     -ms-user-select: none;
 }
 
-.filter-box {
+.filter-box0 {
     position: relative;
 }
 
-.filter-box select {
+.filter-box0 select {
 	display: none;
 }
 
@@ -99,12 +100,47 @@ li {
 .filter-box10 select {
 	display: none;
 }
+.filter-box11 {
+    position: relative;
+}
+
+.filter-box11 select {
+	display: none;
+}
+.filter-box12 {
+    position: relative;
+}
+
+.filter-box12 select {
+	display: none;
+}
+.filter-box13 {
+    position: relative;
+}
+
+.filter-box13 select {
+	display: none;
+}
+.filter-box14 {
+    position: relative;
+}
+
+.filter-box14 select {
+	display: none;
+}
+.filter-box15 {
+    position: relative;
+}
+
+.filter-box15 select {
+	display: none;
+}
 .filter-text {
 	height: 100%;
 	overflow: hidden;
 	position: relative;
 	cursor: pointer;
-	padding: 0 30px 0 10px;
+	padding: 0 16px 0 10px;
 	background: #fff;
 	border: 1px solid #e6e6e6;
 }
@@ -136,8 +172,9 @@ li {
 	top: 42px;
 	left: 0;
 	z-index: 99;
-	border: 1px solid #e6e6e6;
 	overflow: auto;
+	border:0.1px solid #f2f2f2;
+	box-shadow: 0 4px 5px 0 #bdbdbd;
 }
 
 .filter-list li.filter-null a {
@@ -186,13 +223,13 @@ li {
 }
 
 .icon-filter-arrow {
-	width: 8px;
+	width: 7px;
 	height: 6px;
 	background-repeat: no-repeat;
     background-image: url(../images/icon_arrow_down_x2.png);
     background-size: 100%;
-    right: 10px;
-    top: 13px;
+    right: 7px;
+    top: 15px;
     transition: all .2s;
 }
 

@@ -2163,8 +2163,8 @@
   width: 18%;
 }
 .spanbutton{
-  height: 30px;
-line-height: 30px;
+  height: 38px;
+line-height: 38px;
 padding: 0 6px;
 font-size: 17px;
 background-color: #1E9FFF;
@@ -2172,6 +2172,7 @@ border: none;
 border-radius: 2px;
 cursor: pointer;
 opacity: .9;
+color:#fff;
 }
 .selectdiv{
   display: block ! important;

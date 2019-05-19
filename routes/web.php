@@ -33,6 +33,9 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
     Route::resource('/roles',           'RoleController');
     Route::resource('/permissions',     'PermissionController');
     Route::resource('/types',           'TypesController');
+    Route::post('/types/{id}/edit',        'TypesController@edit');
+    Route::get('/types/{id}',        'TypesController@destroy');
+    Route::post('/saveEdit/{type}',           'TypesController@saveEdit');
     Route::resource('/games',     'GamesController');
     Route::resource('/orders',     'OrdersController');
 });
@@ -43,4 +46,4 @@ Route::get('/home/edit',                   'IndexController@edit');
 Route::get('/home/checkorder',                   'IndexController@checkorder');
 Route::get('/home/confirm',                   'IndexController@confirmOrder');
 Route::post('/home/confirm',                   'IndexController@confirm');
-Route::post('/types/store',           'TypesController@store');
+

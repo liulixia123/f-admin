@@ -42,7 +42,7 @@ function checkMobile($mobile){
  * 产生订单号
  */
 function getOrderNumer(){
-    return date('YmdHis') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);;
+    return date('YmdHis') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
 }
 /**
  * [errorLog 打印错误日志记录]
@@ -132,7 +132,7 @@ function get_broswer()
         $exp[0] = "未知浏览器";
         $exp[1] = "";
     }
-    return $exp[0] . '(' . $exp[1] . ')';
+    return $exp[0];
 }
 
 //获取终端操作系统信息
@@ -140,8 +140,16 @@ function get_os()
 {
     $agent = $_SERVER['HTTP_USER_AGENT'];
     $os = false;
-
-    if (preg_match('/win/i', $agent) && strpos($agent, '95')) {
+    if (strpos($agent, 'Android') !== false) {
+        preg_match("/(?<=Android )[\d\.]{1,}/", $agent, $version);
+        $os = 'Android'.$version[0];
+    } elseif (strpos($agent, 'iPhone') !== false) {
+        preg_match("/(?<=CPU iPhone OS )[\d\_]{1,}/", $agent, $version);
+        $os = 'iPhone '.str_replace('_', '.', $version[0]);
+    } elseif (strpos($agent, 'iPad') !== false) {
+        preg_match("/(?<=CPU OS )[\d\_]{1,}/", $agent, $version);
+        $os = 'iPad'.str_replace('_', '.', $version[0]);
+    }elseif (preg_match('/win/i', $agent) && strpos($agent, '95')) {
         $os = 'Windows 95';
     } else if (preg_match('/win 9x/i', $agent) && strpos($agent, '4.90')) {
         $os = 'Windows ME';
@@ -197,15 +205,6 @@ function get_os()
         $os = 'webzip';
     } else if (preg_match('/offline/i', $agent)) {
         $os = 'offline';
-    } else if (strpos($agent, 'Android') !== false) {
-        preg_match("/(?<=Android )[\d\.]{1,}/", $agent, $version);
-        $os = 'Android'.$version[0];
-    } elseif (strpos($agent, 'iPhone') !== false) {
-        preg_match("/(?<=CPU iPhone OS )[\d\_]{1,}/", $agent, $version);
-        $os = 'iPhone '.str_replace('_', '.', $version[0]);
-    } elseif (strpos($agent, 'iPad') !== false) {
-        preg_match("/(?<=CPU OS )[\d\_]{1,}/", $agent, $version);
-        $os = 'iPad'.str_replace('_', '.', $version[0]);
     } else {
         $os = '未知操作系统';
     }

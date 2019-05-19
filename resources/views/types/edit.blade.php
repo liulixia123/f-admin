@@ -17,25 +17,33 @@
     <style type="text/css">
 .types_item {
   display: inline;
-  width: 17%;
+  width: 16%;
   height: 32px;
   position: absolute; 
   padding-right: 15px; 
 
 }
 .inputout{
-  width: 65%;
+  width: 62%;
   height:38px;
   padding: 5px;
   border: 1px solid #e6e6e6;
   margin-bottom: 5px;
   margin-left: -50px;
 }
+#cropedBigImg{
+    width: 70px;
+    height: 50px;
+}
+#cropedBigImg1{
+    width: 70px;
+    height: 50px;
+}
 </style>
 </head>
 <body>
 <div class="wrap-container">
-    <form class="layui-form" style="width: 100%;padding-top: 20px;padding-right: 10px;"  method="post" action="{{url('/types/store')}}" id="ajaxForm">
+    <form class="layui-form" style="width: 100%;padding-top: 20px;padding-right: 10px;"  method="post" id="ajaxForm">
         {{ csrf_field() }}
         <div class="layui-form-item">
         <label class="layui-form-label">机型名称:</label>
@@ -54,7 +62,7 @@
         <div class="layui-input-block">
             <input type="file" id="chooseImage" name="picfile">
                 <!-- 保存用户自定义的背景图片 -->
-            <img id="cropedBigImg" value="{{$info['picfile'] or ''}}" alt="lorem ipsum dolor sit" src="{{$info['picfile'] or ''}}" title="自定义背景"/>
+            <img id="cropedBigImg" value="{{$info['picfile'] or ''}}" alt="lorem ipsum dolor sit" src="{{$info['picfile'] or '/static/admin/images/s2.png'}}" title="自定义背景"/>
         </div>
     </div>
 
@@ -63,7 +71,7 @@
         <div class="layui-input-block">
             <input type="file" id="chooseImage1" name="checkedpicfile">
                 <!-- 保存用户自定义的背景图片 -->
-            <img id="cropedBigImg1" value="{{$info['checkedpicfile'] or ''}}" alt="lorem ipsum dolor sit" src="{{$info['checkedpicfile'] or ''}}" title="自定义背景"/>
+            <img id="cropedBigImg1" value="{{$info['checkedpicfile'] or ''}}" alt="lorem ipsum dolor sit" src="{{$info['checkedpicfile'] or '/static/admin/images/s7.png'}}" title="自定义背景"/>
         </div>
     </div>
 
@@ -166,7 +174,7 @@
     </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn layui-btn-normal" onclick="submit1()">立即提交</button>
+                <button class="layui-btn layui-btn-normal" id="ajaxSubmit">立即提交</button>
                 <!-- <button type="reset" class="layui-btn layui-btn-primary">重置</button> -->
             </div>
         </div>
@@ -179,7 +187,7 @@
     //本小插件支持移动端哦    
     //这里是初始化
     var item = parseInt($("#content").val()); 
-    for(var i=0;i<=item*2+1;i++){
+    for(var i=0;i<=item*2+10;i++){
          $('.filter-box'+i).selectFilter({
         callBack : function (val){
             //返回选择的值
@@ -246,8 +254,8 @@
         }else{
             max_capacity = max_capacity;
         }
-        console.log(min_capacity);
-        console.log(max_capacity);
+        //console.log(min_capacity);
+        //console.log(max_capacity);
         if(min_capacity>=max_capacity){
             layer.msg("最小值必须小于最大值！");
             $("#min_id_"+s).focus();
@@ -293,8 +301,8 @@
         }else{
             max_capacity = max_capacity;
         }
-        console.log(min_capacity);
-        console.log(max_capacity);
+        //console.log(min_capacity);
+        //console.log(max_capacity);
         if(min_capacity>=max_capacity){
             layer.msg("最小值必须小于最大值！");
             $("#min_id_"+s).focus();
@@ -443,12 +451,12 @@
         $('.filter-box'+jishu).selectFilter({
             callBack : function (val){
                 //返回选择的值
-                console.log(val)
+                //console.log(val)
             }
         });
     }
     //form表单异步提交
-    function submit1(){ 
+    $("#ajaxSubmit").on('click',function(){
         var item = parseInt($("#content").val());
         for(var i=0;i<item;i++){
             max_capacity = parseFloat($("#max_id_"+i).val());
@@ -485,17 +493,22 @@
                 return false;
             }
         }
+        layer.load(0);
         /*form表单提交*/
         $("#ajaxForm").ajaxSubmit({
                     type:"post",
+                    url:"{{'/saveEdit/1'}}",
                     dataType : "json",
                     success:function (data) {
-                        console.log("我在提交表单成功之后被调用");
-                       console.log(data); 
+                        //console.log("我在提交表单成功之后被调用");
+                       //console.log(data); 
                        if(data.status == 1){
                             layer.msg(data.msg,{icon:6,time:10000});                            
                             var index = parent.layer.getFrameIndex(window.name);  
-                            setTimeout(layer.close(layer.index),20000);                          
+                            setTimeout(layer.close(layer.index),20000); 
+                            setTimeout(function(){
+                                parent.location.href="/types";
+                            },20000);                         
                             setTimeout(parent.layer.close(index),20000);
                         }else{
                             layer.msg(data.msg,{shift: 6,icon:5});
@@ -503,31 +516,8 @@
                     }
                 });
 
-                /*$.ajax({
-                    url:"{{url('/types/store')}}",
-                    data:$('form').serialize(),
-                    type:'post',
-                    dataType:'json',
-                    contentType:false,// 当有文件要上传时，此项是必须的，否则后台无法识别文件流的起始位置
-                    //processData: false,// 是否序列化data属性，默认true(注意：false时type必须是post
-                    //mimeType:"multipart/form-data",
-                    success:function(res){
-                        console.log(res);
-                        if(res.status == 1){
-                            layer.msg(res.msg,{icon:6,time:1000});                            
-                            var index = parent.layer.getFrameIndex(window.name);  
-                            setTimeout(layer.close(layer.index),20000);                          
-                            setTimeout(parent.layer.close(index),20000);
-                        }else{
-                            layer.msg(res.msg,{shift: 6,icon:5});
-                        }
-                    },
-                    error : function(XMLHttpRequest, textStatus, errorThrown) {
-                        layer.msg('网络失败', {time: 1000});
-                    }
-                });
-                return false;*/
-            
-        }
+
+    })
+    
 </script>
 </html>

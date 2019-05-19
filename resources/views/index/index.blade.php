@@ -71,11 +71,11 @@
             	<tr>
                 
                 <td style="text-align:left;padding-left:15px;" colspan="2">
-                @foreach($typelist as $tlist)  
+                @foreach($typelist as $key=>$tlist)  
                 <!-- <input id="machtype" name="machtype" type="radio" value="{{$tlist['type_name']}}" onchange="typeChange('{{$tlist['type_name']}}-{{$tlist['id']}}')"  style="height:20px;width:20px;" {{(isset($tlist['id'])&&$tlist['id'] == $id) ? 'checked' : ''}}/>
                 <span style="color: #FF0000;font-size: 18px;">{{$tlist['type_name']}}</span> -->
                 <div class="divrel" onclick="getfun(this.id)" id="{{$tlist['id']}}">
-                  <input type="radio" value= "{{$tlist['type_name']}}" id="radio_{{$tlist['id']}}" name="machtype"  class="radio" onchange="typeChange('{{$tlist['type_name']}}-{{$tlist['id']}}')">
+                  <input type="radio" value= "{{$tlist['type_name']}}" id="radio_{{$tlist['id']}}" name="machtype"  class="radio" onchange="typeChange('{{$tlist['type_name']}}-{{$tlist['id']}}')" @if($key==0) checked="checked" @endif>
                   <div  class="divs" id="{{$tlist['id']}}">{{$tlist['type_name']}}</div><img src="{{$tlist['picfile']}}" width="70" height="52" class="divimg" id='1'/><img src="{{$tlist['checkedpicfile']}}" width="70" height="52" class="divimgnone" />
                 </div>
                 @endforeach
@@ -95,7 +95,7 @@
             	@foreach($card_type as $ctype)
             	<tr class = "cardtypediv"> 
                 <td class="cardtd">
-                <input id="{{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B" name="cardtype" type="radio" value="{{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B" onchange="cardClick('{{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B')" class="gcs-radio"/><label for="{{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B"></label> 
+                <input id="{{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B-{{$ctype['max_capacity']}}{{$ctype['max_capacity_danwei']}}B" name="cardtype" type="radio" value="{{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B" onchange="cardClick('{{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B')" class="gcs-radio"/><label for="{{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B-{{$ctype['max_capacity']}}{{$ctype['max_capacity_danwei']}}B"></label> 
               	<span class="spantd">{{$ctype['min_capacity']}}{{$ctype['min_capacity_danwei']}}B ~ {{$ctype['max_capacity']}}{{$ctype['max_capacity_danwei']}}B</span>
                 </td>
               </tr> 
@@ -124,9 +124,8 @@
         <div>
             @foreach($games as $game)
               <div id="row_{{$game['id']}}" class="div1">
-                <p class="spandiv xuan" ><input type="checkbox"  name="selarray[]" id="box{{$game['id']}}" value="{{$game['id']}}" onChange='check()'  onclick="update()"  class="gcs-checkbox"/><label for="box{{$game['id']}}"></label></p>         
-                <p  class="spandivn name">{{$game['game_name']}}</p>
-                <p  class="@if(mb_strlen($game['game_name'])>12) spandiv @else spandivn @endif name">{{$game['game_name']}}</p>
+                <p class="spandiv xuan" ><input type="checkbox"  name="selarray[]" id="box{{$game['id']}}" value="{{$game['id']}}" onChange='check()'  onclick="update()"  class="gcs-checkbox"/><label for="box{{$game['id']}}"></label></p> 
+                <p  class="@if(mb_strlen($game['game_name'])>20) spandivn @else spandiv @endif name">{{$game['game_name']}}</p>
                 <p  class="spandiv yuyan">{{$game['language']}}</p>
                 <p class="spandiv capacity" id="gb_{{$game['id']}}">{{$game['size_range']}}{{$game['danwei']}}B</p>
               </div>
@@ -146,7 +145,7 @@ var sh,wh3,nowlocal;
         wh3 = $(window).height()/3;
         //滚动条的高度+屏幕上边三分之一的距离=当前的div一直在屏幕距离窗口上边的位置
         nowlocal = sh+wh3;
-        console.log(sh);
+        //console.log(sh);
         if(sh>=0&&sh<327){
           nowlocal=192-sh/4;
         }else{
@@ -245,12 +244,13 @@ var sh,wh3,nowlocal;
   }
   //获取卡片类型
 	function typeChange(machtype){
-    console.log(machtype);
+    //console.log(machtype);
     //type = machtype.split('-');
 		$.get("{{url('/home/edit')}}",{id:machtype},function(data){
         if(data['status']==1){
             typecard = data['data'][0];
             games = data['data'][1]['games'];
+
             var str = "";
             var gamestr = ""; 
             //移除table 下的tr
@@ -286,13 +286,13 @@ var sh,wh3,nowlocal;
     td.className = "cardtd";
     var tdinput = document.createElement('input');
         tdinput.setAttribute('type','radio');
-        tdinput.setAttribute('id',h.min_capacity+h.min_capacity_danwei+'B');
+        tdinput.setAttribute('id',h.min_capacity+h.min_capacity_danwei+'B'+'-'+h.max_capacity+h.max_capacity_danwei+'B');
         tdinput.setAttribute('name','cardtype');
         tdinput.setAttribute('class','gcs-radio');
         tdinput.setAttribute('value',h.min_capacity+h.min_capacity_danwei+'B');
         tdinput.setAttribute('onchange','cardClick("'+h.min_capacity+h.min_capacity_danwei+'B'+'")'); 
     var label = document.createElement('label');        
-        label.setAttribute('for',h.min_capacity+h.min_capacity_danwei+'B'); 
+        label.setAttribute('for',h.min_capacity+h.min_capacity_danwei+'B'+'-'+h.max_capacity+h.max_capacity_danwei+'B'); 
     var spantd = document.createElement('span'); 
         spantd.className = "spantd"; 
         spantd.innerHTML= h.min_capacity+h.min_capacity_danwei+' ~ '+h.max_capacity+h.max_capacity_danwei;
@@ -303,7 +303,20 @@ var sh,wh3,nowlocal;
     return row;
 
   }
-
+  //获取字符长度
+  function getByeLen(val){
+    var len = 0;
+    vlen = val.length;
+    for(var i=0;i<vlen;i++){
+      var a = val.charAt(i);
+      if(a.match(/[^\x00-\xff]/ig)!=null){
+        len+=2;
+      }else{
+        len+=1;
+      }
+    }
+    return len;
+  }
 
   //插入游戏列表表格元素
   function getGameDataRow(h){
@@ -326,8 +339,14 @@ var sh,wh3,nowlocal;
     xuanspan.appendChild(tdinput); 
     xuanspan.appendChild(label); 
     row.appendChild(xuanspan);
-    var namespan = document.createElement('p'); 
-        namespan.className = "spandiv name";
+    var namespan = document.createElement('p');
+
+        if(getByeLen(h.game_name)>30){
+           namespan.className = "spandivn name";
+        }else{
+          namespan.className = "spandiv name";
+        }
+        
         namespan.innerHTML = h.game_name;
     row.appendChild(namespan);
     var language = document.createElement('p');
@@ -359,11 +378,11 @@ var sh,wh3,nowlocal;
           if(f>cardsize){
             layer.msg("所选游戏超出卡片容量请重新选择");
             return false;
-          }
-          $("#selrlsum").text(f/1000);
-          havecard = (cardsize-f)/1000;
-          $("#havecardrl").text(havecard);
+          }          
         });
+        $("#selrlsum").text(f/1000);
+        havecard = (cardsize-f)/1000;
+        $("#havecardrl").text(havecard);
   }
   //判断单位大小转换
   function getDanwei(size_range,danwei){
@@ -432,7 +451,7 @@ var sh,wh3,nowlocal;
       carddanwei = card.substr(card.length-2,2);              
       cardsize_range = parseFloat(card.substr(0,card.length-2));
       cardsize = getDanwei(cardsize_range,carddanwei);
-      /*console.log(card);*/
+      //console.log(typeid);
       var gameid =[]; 
       var f=0;     
       $('input[name="selarray[]"]:checked').each(function(){
@@ -508,12 +527,17 @@ var sh,wh3,nowlocal;
           gameid.push($(this).val());
          
       }); 
-    $.post("{{url('/home/confirm')}}",{type:type,selcartype:cardsize,mobile:mobile,gameid:gameid,_token:"{{ csrf_token() }}"},function(data){
+    $.post("{{url('/home/confirm')}}",{type:type,selcartype:card,mobile:mobile,gameid:gameid,_token:"{{ csrf_token() }}"},function(data){
       if(data['code']==0){
         layer.msg('已提交成功', {
-                  time: 20000, //20s后自动关闭
+                  time: 30000, //20s后自动关闭
                 });
            setTimeout(window.location.href="{{url('/')}}",3000);
+      }else if(data['code']==2){
+        layer.msg('提交失败，所选游戏机型后台已删除请重新选择', {
+                  time: 3000, //20s后自动关闭
+                });
+        setTimeout(window.location.href="{{url('/')}}",3000);      
       }else{
         layer.msg('提交失败', {
                   time: 2000, //20s后自动关闭

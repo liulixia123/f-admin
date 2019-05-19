@@ -69,7 +69,7 @@ class IndexController extends Controller
 			return ['code'=>1,'msg'=>trans('fzs.common.wrong')];
 		}
 		//判断数据库是否存在该机型
-		$typearr = Type::where('type_name',$type)->get()->toArray();
+		$typearr = Type::where('type_name',$type)->where('status',1)->get()->toArray();
 		if(empty($typearr)){
 			return ['code'=>1,'msg'=>trans('fzs.common.wrong')];
 		}
@@ -117,12 +117,15 @@ class IndexController extends Controller
 		$selcartype = $request['selcartype'];//卡片容量
 		$gameid = $request['gameid'];//游戏id
 		if(!checkMobile($mobile)){
-
+			return ['code'=>1,'msg'=>trans('fzs.common.wrong')];
 		}
-		$typearr = Type::where('type_name',$type)->get()->toArray();
+		$typearr = Type::where('type_name',$type)->where('status',1)->get()->toArray();
+		if(empty($typearr)){
+			return ['code'=>2,'msg'=>trans('fzs.common.wrong')];
+		}
 		$typeid = $typearr[0]['id'];
 		$type_name = $typearr[0]['type_name'];
-		//$gameidarr = explode(',', $gameid);
+		
 		$gamearr = Game::whereIn('id',$gameid)->get()->toArray();
 		foreach ($gamearr as $key => $value) {
 			$game['id'] = $value['id'];

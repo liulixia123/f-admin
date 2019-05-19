@@ -21,6 +21,7 @@ class Log extends Model
             'log_info'=>$content,
             'log_url'=>$url,
             'log_ip'=>$_SERVER['REMOTE_ADDR'],
+            'os_broswer'=>get_os().'的'.get_broswer(),
             'log_time'=>date('Y-m-d H:i:s',time())
         ];
         Log::insert($data);

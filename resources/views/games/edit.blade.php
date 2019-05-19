@@ -73,7 +73,7 @@
                     layer.msg('至少选择一个所属游戏机型',{shift: 6,icon:5});
                     return false;
                 }  
-                console.log($('form').serialize());             
+                //console.log($('form').serialize());             
                 $.ajax({
                     url:"{{url('/games')}}",
                     data:$('form').serialize(),

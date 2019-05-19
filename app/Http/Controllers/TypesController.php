@@ -55,6 +55,16 @@ class TypesController extends BaseController
         return ['status'=>1,'msg'=>trans('fzs.common.success')];
     }
     /**
+     * 游戏机型增加保存
+     */
+    public function saveEdit(StoreRequest $request,$type){
+        $model = new Type();       
+        $type = DataService::handleDate($model,$request->all(),'types-add_or_update');
+        if($type['status']==1)Log::addLogs(trans('fzs.types.handle_type').trans('fzs.common.success'),'/types/story');
+        else Log::addLogs(trans('fzs.types.handle_type').trans('fzs.common.fail'),'/types/destroy');
+        return ['status'=>1,'msg'=>trans('fzs.common.success')];
+    }
+    /**
      * 游戏机型删除
      */
     public function destroy($id)
