@@ -325,10 +325,11 @@ function getClientMobileBrand($agent = ''){
  * 统计访问量
  */
 function getPV(){
-    if(!file_exists("record.txt")){
+    $record = public_path()."/record.txt";
+    if(!file_exists($record)){
         return 0;
     }else{ //如果不是第一次访问直接读取内容，并+1,写入更新后再显示新的访客数
-        $str = file_get_contents("record.txt");
+        $str = file_get_contents($record);
         $rows = explode("\r\n",$str);
         $count = count($rows);
         return $count;
@@ -340,13 +341,14 @@ function putPV(){
     //拼凑要写入到文件的数据：ip|2018-5-20 10:24:15
     $write = $remote . '|' . date('Y-m-d H:i:s');
     $write = "\r\n" . $write;
-    if(!file_exists("record.txt")){
-            $one_file = fopen("record.txt","w+"); //建立一个统计文本，如果不存在就创建            
-            file_put_contents("record.txt",$write,FILE_APPEND);
+    $record = public_path()."/record.txt";
+    if(!file_exists($record)){
+            $one_file = fopen($record,"w+"); //建立一个统计文本，如果不存在就创建            
+            file_put_contents($record,$write,FILE_APPEND);
             fclose("$one_file");
             return true;
          }else{ //如果不是第一次访问直接读取内容，并+1,写入更新后再显示新的访客数
-            file_put_contents("record.txt",$write,FILE_APPEND);
+            file_put_contents($record,$write,FILE_APPEND);
             return true;
     }
 }

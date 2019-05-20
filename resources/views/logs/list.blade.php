@@ -27,8 +27,8 @@
             <col class="hidden-xs" width="50">
             <col class="hidden-xs" width="80">
             <col>
-            <col class="hidden-xs" width="150">
-            <col class="hidden-xs" width="150">
+            <col class="hidden-xs" width="200">
+            <col class="hidden-xs" width="200">
             <col width="200">
         </colgroup>
         <thead>
@@ -49,7 +49,7 @@
                 <td class="hidden-xs">{{$list['admin_id']}}</td>
                 <td>{{$list['log_info']}}</td>
                 <td class="hidden-xs">{{$list['log_url']}}</td>
-                <td class="hidden-xs">{{$list['log_ip']}}</td>
+                <td class="hidden-xs">{{$list['log_ip']}}({{$list['city']}})</td>
                 <td class="hidden-xs">{{$list['os_broswer']}}</td>
                 <td>{{$list['log_time']}}</td>
             </tr>

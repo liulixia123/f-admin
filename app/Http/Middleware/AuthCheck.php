@@ -42,7 +42,7 @@ class AuthCheck
     {
         if($request->path() == 'logout') {
             $this->auth->logout();
-            return redirect('/');
+            return redirect('/admin');
         }
         if ($this->auth->guest()) {
             if ($request->ajax()) {

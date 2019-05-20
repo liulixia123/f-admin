@@ -18,6 +18,7 @@ class CreateAdminLogsTable extends Migration {
 			$table->integer('admin_id')->comment('用户ID');
 			$table->string('log_url', 128)->nullable()->comment('URL');
 			$table->string('log_ip', 20)->nullable()->comment('ip');
+			$table->string('city', 20)->nullable()->comment('城市');
 			$table->string('os_broswer', 20)->nullable()->comment('设备浏览器');
 			$table->string('log_info', 100)->nullable()->comment('描述');
 			$table->datetime('log_time')->nullable()->comment('日志日期');
