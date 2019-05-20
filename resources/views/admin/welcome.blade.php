@@ -21,7 +21,7 @@
                                 <span class="iconfont">&#xe606;</span>
                             </div>
                             <div class="right-text-con">
-                                <p class="name">会员数</p>
+                                <p class="name">今日访问量</p>
                                 <p><span class="color-org">{{$orders_info['unum']}}</span>数据<span class="iconfont">&#xe628;</span></p>
                             </div>
                         </a>
@@ -87,8 +87,8 @@
             <div class="panel panel-default contact-panel">
                 <div class="panel-header">联系我</div>
                 <div class="panel-body">
-                    <p>QQ：1255896643</p>
-                    <p>E-mail:1255896643@qq.com</p>
+                    <p>QQ：1518545702</p>
+                    <p>E-mail:1518545702@qq.com</p>
                 </div>
             </div>
         </div>

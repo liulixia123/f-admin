@@ -21,6 +21,7 @@ class IndexController extends Controller
 	 * @return [type] [description]
 	 */
 	public function index(){
+		putPV();//统计pv
 		$id = 1;
 		$info = $id?Type::find($id):[];  
         $card_type = $info?unserialize($info['card_type']):[];   

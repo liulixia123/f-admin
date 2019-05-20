@@ -75,7 +75,7 @@ class HomeController extends BaseController
         $dateEnd = date("Y-m-d\T23:59:59\Z", strtotime(date("Y-m-d",time())));
         $total = DB::table('orders')->where(['status'=>1])->count();
         $today = DB::table('orders')->where('created_at', '>=', $dateStart)->where('created_at', '<=', $dateEnd)->count();
-        $orders_info['unum'] = 99;
+        $orders_info['unum'] = getPV();
         $orders_info['day'] = $today;
         $orders_info['total'] = $total;
         return $orders_info;
