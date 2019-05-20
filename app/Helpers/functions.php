@@ -93,7 +93,11 @@ function errorLog($message,$file)
 function get_broswer()
 {
     $sys = $_SERVER['HTTP_USER_AGENT'];  //获取用户代理字符串
-    if (stripos($sys, "Firefox/") > 0) {
+    if(stripos($sys, "MicroMessenger") > 0){
+        preg_match('/MicroMessenger\/([^\s]+)/i', $sys, $b);
+        $exp[0] = "weixin";
+        $exp[1] = $b[1];  //获取微信浏览器版本号
+    }elseif (stripos($sys, "Firefox/") > 0) {
         preg_match("/Firefox\/([^;)]+)+/i", $sys, $b);
         $exp[0] = "Firefox";
         $exp[1] = $b[1];  //获取火狐浏览器的版本号
@@ -125,8 +129,11 @@ function get_broswer()
     } elseif (stripos($sys, "MicroMessenger") > 0) {
         $exp[0] = "weixin";
         $exp[1] = "";
-    }elseif (stripos($sys, "QQ") > 0) {
+    }elseif (stripos($sys, "QQBrowser") > 0) {
         $exp[0] = "QQ";
+        $exp[1] = "";
+    }elseif (stripos($sys, "UCWEB") > 0) {
+        $exp[0] = "UC";
         $exp[1] = "";
     }else {
         $exp[0] = "未知浏览器";
@@ -210,6 +217,110 @@ function get_os()
     }
     return $os;
 }
+/**
+ * 通过IP获取客户端相关访问信息
+ * @param $ip IP
+ * @return array
+ */
+function getClientIPInfo($ip = ''){
+    if(!$ip){
+        return false;
+    }
+    $ipContent   = file_get_contents("http://ip.taobao.com/service/getIpInfo.php?ip=$ip");      
+    $jsonData = json_decode($ipContent, true);
+    if(0 != $jsonData['code']){
+        return false;
+    }
+    $IPinfo = $jsonData['data'];
+    return $IPinfo;
+}
+//获取用户真实ip
+function get_user_ip(){
+    global $ip;
+    
+    if (getenv("HTTP_CLIENT_IP"))
+        $ip = getenv("HTTP_CLIENT_IP");
+    elseif(getenv("HTTP_X_FORWARDED_FOR"))
+        $ip = getenv("HTTP_X_FORWARDED_FOR");
+    elseif(getenv("REMOTE_ADDR"))
+        $ip = getenv("REMOTE_ADDR");
+    else $ip = "Unknow";
+ 
+    return $ip;
+}
+/**
+ * 获取客户端手机型号
+ * @param $agent    //$_SERVER['HTTP_USER_AGENT']
+ * @return array[mobile_brand]      手机品牌
+ * @return array[mobile_ver]        手机型号
+ */
+function getClientMobileBrand($agent = ''){
+    if(preg_match('/iPhone\s([^\s|;]+)/i', $agent, $regs)) {
+        $mobile_brand = '苹果';
+        $mobile_ver = $regs[0];
+    }elseif(preg_match('/SAMSUNG|Galaxy|GT-|SCH-|SM-\s([^\s|;]+)/i', $agent, $regs)) {
+         $mobile_brand = '三星';
+        $mobile_ver = $regs[0];
+    }elseif(preg_match('/Huawei|Honor|H60-|H30-\s([^\s|;]+)/i', $agent, $regs)) {
+         $mobile_brand = '华为';
+        $mobile_ver = $regs[0];
+    }elseif(preg_match('/Mi note|mi one\s([^\s|;]+)/i', $agent, $regs)) {        
+        $mobile_brand = '小米';
+        $mobile_ver = $regs[0];
+    }elseif(preg_match('/HM NOTE|HM201\s([^\s|;]+)/i', $agent, $regs)) {        
+        $mobile_brand = '红米';
+        $mobile_ver = $regs[0];
+    }elseif(preg_match('/Coolpad|8190Q|5910\s([^\s|;]+)/i', $agent, $regs)) {        
+        $mobile_brand = '酷派';
+        $mobile_ver = $regs[0];
+    }elseif(preg_match('/ZTE|X9180|N9180|U9180\s([^\s|;]+)/i', $agent, $regs)) {        
+        $mobile_brand = '中兴';
+        $mobile_ver = $regs[0];
+    }elseif(preg_match('/OPPO|X9007|X907|X909|R831S|R827T|R821T|R811|R2017\s([^\s|;]+)/i', $agent, $regs)) {        
+        $mobile_brand = 'OPPO';
+        $mobile_ver = $regs[0];
+    }elseif(preg_match('/HTC|Desire\s([^\s|;]+)/i', $agent, $regs)) {        
+        $mobile_brand = 'HTC';
+        $mobile_ver = $regs[0];
+    }elseif(preg_match('/Nubia|NX50|NX40\s([^\s|;]+)/i', $agent, $regs)) {        
+        $mobile_brand = '努比亚';
+        $mobile_ver = $regs[0];
+    }elseif(preg_match('/M045|M032|M355\s([^\s|;]+)/i', $agent, $regs)) {        
+        $mobile_brand = '魅族';
+        $mobile_ver = $regs[0];
+    }elseif(preg_match('/Gionee|GN\s([^\s|;]+)/i', $agent, $regs)) {        
+        $mobile_brand = '金立';
+        $mobile_ver = $regs[0];
+    }elseif(preg_match('/HS-U|HS-E\s([^\s|;]+)/i', $agent, $regs)) {        
+        $mobile_brand = '海信';
+        $mobile_ver = $regs[0];
+    }elseif(preg_match('/Lenove\s([^\s|;]+)/i', $agent, $regs)) {
+        $mobile_brand = '联想';
+        $mobile_ver = $regs[0];
+    }elseif(preg_match('/ONEPLUS\s([^\s|;]+)/i', $agent, $regs)) {
+        $mobile_brand = '一加';
+        $mobile_ver = $regs[0];
+    }elseif(preg_match('/vivo\s([^\s|;]+)/i', $agent, $regs)) {
+        $mobile_brand = 'vivo';
+        $mobile_ver = $regs[0];
+    }elseif(preg_match('/K-Touch\s([^\s|;]+)/i', $agent, $regs)) {
+        $mobile_brand = '天语';
+        $mobile_ver = $regs[0];
+    }elseif(preg_match('/DOOV\s([^\s|;]+)/i', $agent, $regs)) {
+        $mobile_brand = '朵唯';
+        $mobile_ver = $regs[0];
+    }elseif(preg_match('/GFIVE\s([^\s|;]+)/i', $agent, $regs)) {
+        $mobile_brand = '基伍';
+        $mobile_ver = $regs[0];
+    }elseif(preg_match('/Nokia\s([^\s|;]+)/i', $agent, $regs)) {
+        $mobile_brand = '诺基亚';
+        $mobile_ver = $regs[0];
+    }else{
+        $mobile_brand = '其他';
+    }
+    return ['mobile_brand'=>$mobile_brand, 'mobile_ver'=>$mobile_ver];
+}
+
 
 /**
 *   将中文转成成英文的字符长度
