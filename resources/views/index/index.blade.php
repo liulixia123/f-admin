@@ -6,14 +6,14 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<meta name="format-detection" content="telephone=no">
-		<title>游戏前台首页</title>
+		<title>自选游戏首页</title>
     <link rel="stylesheet" type="text/css" href="/static/index/style.css">
 		<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 		<script type="text/javascript" src="https://cdn.bootcss.com/layer/3.1.0/layer.js"></script>
 		<script type="text/javascript" src="/static/index/jQuery-jcContact.js"></script>
 		<style type="text/css">
     
-    .jcConBtn{float:right;z-index: 6;position:fixed;top:192px;right:8px;width:50%;height:150px;cursor:pointer;background-color:rgba(255,215,0,0.9);border-radius: 5px;}
+    .jcConBtn{float:right;z-index: 6;position:fixed;top:192px;right:8px;width:200px;height:150px;cursor:pointer;background-color:rgba(255,215,0,0.9);border-radius: 5px;}
     
     .divrel {float:left;position:relative; width:70px; height:52px;margin-right: 10px;margin-bottom: 23px;}
 .radio {display:none}
@@ -75,7 +75,7 @@
                 <!-- <input id="machtype" name="machtype" type="radio" value="{{$tlist['type_name']}}" onchange="typeChange('{{$tlist['type_name']}}-{{$tlist['id']}}')"  style="height:20px;width:20px;" {{(isset($tlist['id'])&&$tlist['id'] == $id) ? 'checked' : ''}}/>
                 <span style="color: #FF0000;font-size: 18px;">{{$tlist['type_name']}}</span> -->
                 <div class="divrel" onclick="getfun(this.id)" id="{{$tlist['id']}}">
-                  <input type="radio" value= "{{$tlist['type_name']}}" id="radio_{{$tlist['id']}}" name="machtype"  class="radio" onchange="typeChange('{{$tlist['type_name']}}-{{$tlist['id']}}')" @if($key==0) checked="checked" @endif>
+                  <input type="radio" value= "{{$tlist['type_name']}}" id="radio_{{$tlist['id']}}" name="machtype"  class="radio" onclick="typeChange('{{$tlist['type_name']}}-{{$tlist['id']}}')">
                   <div  class="divs" id="{{$tlist['id']}}">{{$tlist['type_name']}}</div><img src="{{$tlist['picfile']}}" width="70" height="52" class="divimg" id='1'/><img src="{{$tlist['checkedpicfile']}}" width="70" height="52" class="divimgnone" />
                 </div>
                 @endforeach
@@ -125,7 +125,7 @@
             @foreach($games as $game)
               <div id="row_{{$game['id']}}" class="div1">
                 <p class="spandiv xuan" ><input type="checkbox"  name="selarray[]" id="box{{$game['id']}}" value="{{$game['id']}}" onChange='check()'  onclick="update()"  class="gcs-checkbox"/><label for="box{{$game['id']}}"></label></p> 
-                <p  class="@if(mb_strlen($game['game_name'])>20) spandivn @else spandiv @endif name">{{$game['game_name']}}</p>
+                <p  class="@if(mb_strlen($game['game_name'])>13) spandivn @else spandiv @endif name">{{$game['game_name']}}</p>
                 <p  class="spandiv yuyan">{{$game['language']}}</p>
                 <p class="spandiv capacity" id="gb_{{$game['id']}}">{{$game['size_range']}}{{$game['danwei']}}B</p>
               </div>
@@ -191,6 +191,7 @@ var sh,wh3,nowlocal;
   $(':checkbox:not(:checked)').each(function(){  //对于未被选中checkbox的行
     id = parseInt(this.id.substr(3));   
     var par_node=document.getElementById(this.id).parentNode.parentNode;//这里的this代表input元素（节点），向上追述两个父级即可进入tr元素
+    console.log(par_node.id);
     if(id&1){//基数行
       document.getElementById(par_node.id).style.background="#ffffff";//控制tr的背景色
       document.getElementById(par_node.id).style.color="#000000";//控制tr的字体色
@@ -214,11 +215,12 @@ var sh,wh3,nowlocal;
    //机型图片点击交换
 
   function getfun(sId){
-    var oImg = $(".divs");
+    var oImg = $(".divs");    
     var len = oImg.length;
     for (var i = 0; i < len; i++) {
       var oldimg = oImg[i].nextSibling.nextSibling.src;         
           var newimg = oImg[i].nextSibling.src;
+          console.log(oImg[i].id);
           if (oImg[i].id == sId) {            
             if(oImg[i].previousSibling.previousSibling.checked==false){         
               oImg[i].previousSibling.previousSibling.checked = true;              
@@ -244,9 +246,14 @@ var sh,wh3,nowlocal;
   }
   //获取卡片类型
 	function typeChange(machtype){
-    //console.log(machtype);
+    if(machtype.indexOf("-") != -1){
+      type = machtype.split('-');
+      typeid = type[1];
+    }else{
+      typeid = machtype;
+    }
     //type = machtype.split('-');
-		$.get("{{url('/home/edit')}}",{id:machtype},function(data){
+		$.get("{{url('/home/edit')}}",{id:typeid},function(data){
         if(data['status']==1){
             typecard = data['data'][0];
             games = data['data'][1]['games'];
@@ -341,7 +348,7 @@ var sh,wh3,nowlocal;
     row.appendChild(xuanspan);
     var namespan = document.createElement('p');
 
-        if(getByeLen(h.game_name)>30){
+        if(getByeLen(h.game_name)>26){
            namespan.className = "spandivn name";
         }else{
           namespan.className = "spandiv name";
@@ -446,7 +453,11 @@ var sh,wh3,nowlocal;
         return false;
       }
       //var typeid = document.getElementById('machtype').value; 
-      var typeid = $('input[name="machtype"]:checked').val();     
+      var typeid = $('input[name="machtype"]:checked').val();      
+      if(typeof typeid == "undefined"){
+         typeid = "PSV";
+      } 
+        
       var card =  $('input[name="cardtype"]:checked').val();
       carddanwei = card.substr(card.length-2,2);              
       cardsize_range = parseFloat(card.substr(0,card.length-2));
@@ -487,6 +498,7 @@ var sh,wh3,nowlocal;
         return false; 
       }     
       $.get("{{url('/home/checkorder')}}",{type:typeid,card:cardsize_range,gameid:gameid,mobile:mobile},function(data){
+        
           if(data['code']==0){
             //window.location.href="{{url('/home/confirm')}}?type="+typeid+"&card="+card+"&gameid="+gameid.join(',');
             //询问框
@@ -509,7 +521,11 @@ var sh,wh3,nowlocal;
   }
 
    function confirmOrder(){
-    var type = $('input[name="machtype"]:checked').val(); 
+    var type = $('input[name="machtype"]:checked').val();
+    
+    if(typeof type == "undefined"){
+         type = "PSV";
+      } 
     var card = $('input[name="cardtype"]:checked').val();
       carddanwei = card.substr(card.length-2,2);              
       cardsize_range = parseFloat(card.substr(0,card.length-2));

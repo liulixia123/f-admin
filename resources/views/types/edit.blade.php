@@ -503,7 +503,7 @@
                         //console.log("我在提交表单成功之后被调用");
                        //console.log(data); 
                        if(data.status == 1){
-                            layer.msg(data.msg,{icon:6,time:10000,
+                            layer.msg(data.msg,{icon:6,time:1000,
                                 end: function () {
                                         var index = parent.layer.getFrameIndex(window.name);
                                         parent.layer.close(index);
@@ -516,7 +516,12 @@
                             },20000);                         
                             setTimeout(parent.layer.close(index),20000);*/
                         }else{
-                            layer.msg(data.msg,{shift: 6,icon:5});
+                            layer.msg(data.msg,{shift: 6,icon:5,time:1000,
+                                end: function () {
+                                        var index = parent.layer.getFrameIndex(window.name);
+                                        parent.layer.close(index);
+                                    }
+                            });
                         }
                     }
                 });

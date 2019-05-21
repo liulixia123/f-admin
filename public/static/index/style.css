@@ -73,7 +73,7 @@ height:20px;width:20px;
     }
     .div1:hover{
       width: 100%;
-      height: 50px;
+      height: 54px;
       background-color: #dedede;margin:10px 0;border-radius: 3px;box-shadow: 0 3px 4px #bdbdbd;vertical-align: center;
     }
     .spandiv{
@@ -83,9 +83,7 @@ height:20px;width:20px;
       vertical-align: middle;
       font-size: 14px;
       height: 26px;
-      line-height: 26px;
-      height: 22px;
-      line-height: 22px;      
+      line-height: 26px;   
 
     }
     .spandivn{
@@ -98,7 +96,7 @@ height:20px;width:20px;
       
     }
     .pfloat1{
-      width: 17%;
+      width: 14%;
       float: left;
       text-align: center;
       vertical-align: middle;
@@ -112,7 +110,7 @@ height:20px;width:20px;
 
     }
     .pfloat2{
-      width: 49%;
+      width: 50%;
       float: left;
       text-align: center;
       vertical-align: middle;
@@ -126,7 +124,7 @@ height:20px;width:20px;
 
     }
     .pfloat3{
-      width: 17%;
+      width: 14%;
       float: left;
       text-align: center;
       vertical-align: middle;
@@ -140,7 +138,7 @@ height:20px;width:20px;
 
     }
     .pfloat4{
-      width: 17%;
+      width: 22%;
       float: left;
       text-align: center;
       vertical-align: middle;
@@ -155,19 +153,20 @@ height:20px;width:20px;
     }
     
     .xuan{
-      width: 10%;
+      width: 14%;
+      margin-top:16px;
     }
     
     .name{     
-      width: 58%;
+      width: 50%;
            
     }
     
     .capacity{
-      width: 17%;
+      width: 22%;
     }
     .yuyan{
-      width: 15%;
+      width: 14%;
     }
     /*复选框*/
 
