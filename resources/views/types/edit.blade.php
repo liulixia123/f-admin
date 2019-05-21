@@ -174,7 +174,7 @@
     </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn layui-btn-normal" id="ajaxSubmit">立即提交</button>
+                <button class="layui-btn layui-btn-normal" id="ajaxSubmit" type="button">立即提交</button>
                 <!-- <button type="reset" class="layui-btn layui-btn-primary">重置</button> -->
             </div>
         </div>
@@ -503,13 +503,18 @@
                         //console.log("我在提交表单成功之后被调用");
                        //console.log(data); 
                        if(data.status == 1){
-                            layer.msg(data.msg,{icon:6,time:10000});                            
-                            var index = parent.layer.getFrameIndex(window.name);  
+                            layer.msg(data.msg,{icon:6,time:10000,
+                                end: function () {
+                                        var index = parent.layer.getFrameIndex(window.name);
+                                        parent.layer.close(index);
+                                    }
+                            });                            
+                            /*var index = parent.layer.getFrameIndex(window.name);  
                             setTimeout(layer.close(layer.index),20000); 
                             setTimeout(function(){
                                 parent.location.href="/types";
                             },20000);                         
-                            setTimeout(parent.layer.close(index),20000);
+                            setTimeout(parent.layer.close(index),20000);*/
                         }else{
                             layer.msg(data.msg,{shift: 6,icon:5});
                         }
