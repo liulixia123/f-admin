@@ -48,7 +48,7 @@ return [
     'menu_foreign_key'                      => 'menu_id',
     'menu_table_id_key'                     => 'id',
     'menu_table_parent_id_key'              => 'parent_id',
-    'menu_table_cannot_manage_ids'          =>  '1,2,3,4,5,6,7',
+    'menu_table_cannot_manage_ids'          =>  '1,2,3,4,5,6,7,8,12',
 
     //site
     'site'                            => 'App\Models\Site',

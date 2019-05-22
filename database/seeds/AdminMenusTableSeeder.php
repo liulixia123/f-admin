@@ -146,6 +146,18 @@ class AdminMenusTableSeeder extends Seeder
                     'created_at'    => date('Y-m-d H:i:s',time()),
                     'updated_at'    => date('Y-m-d H:i:s',time()),
                 ),
+            11 =>
+                array (
+                    'id'            => 12,
+                    'parent_id'     => 1,
+                    'order'         => 9,
+                    'title'         => '网站信息',
+                    'icon'          => '&#xe621;',
+                    'uri'           => '/site',
+                    'routes'        => 'url:/site',
+                    'created_at'    => date('Y-m-d H:i:s',time()),
+                    'updated_at'    => date('Y-m-d H:i:s',time()),
+                ),
             )
         );
     }
