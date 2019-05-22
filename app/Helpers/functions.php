@@ -236,17 +236,25 @@ function getClientIPInfo($ip = ''){
 }
 //获取用户真实ip
 function get_user_ip(){
-    global $ip;
-    
-    if (getenv("HTTP_CLIENT_IP"))
-        $ip = getenv("HTTP_CLIENT_IP");
-    elseif(getenv("HTTP_X_FORWARDED_FOR"))
-        $ip = getenv("HTTP_X_FORWARDED_FOR");
-    elseif(getenv("REMOTE_ADDR"))
-        $ip = getenv("REMOTE_ADDR");
-    else $ip = "Unknow";
- 
-    return $ip;
+    static $realip;
+        if (isset($_SERVER)){
+            if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])){
+                $realip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+            } else if (isset($_SERVER["HTTP_CLIENT_IP"])) {
+                $realip = $_SERVER["HTTP_CLIENT_IP"];
+            } else {
+                $realip = $_SERVER["REMOTE_ADDR"];
+            }
+        } else {
+            if (getenv("HTTP_X_FORWARDED_FOR")){
+                $realip = getenv("HTTP_X_FORWARDED_FOR");
+            } else if (getenv("HTTP_CLIENT_IP")) {
+                $realip = getenv("HTTP_CLIENT_IP");
+            } else {
+                $realip = getenv("REMOTE_ADDR");
+            }
+        } 
+        return $realip;
 }
 /**
  * 获取客户端手机型号

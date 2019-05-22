@@ -20,8 +20,8 @@ class Log extends Model
             'admin_id'=>$id,
             'log_info'=>$content,
             'log_url'=>$url,
-            'log_ip'=>$_SERVER['REMOTE_ADDR'],
-            'city'=>getClientIPInfo($_SERVER['REMOTE_ADDR'])['city'],
+            'log_ip'=>get_user_ip(),
+            'city'=>getClientIPInfo(get_user_ip())['city'],
             'os_broswer'=>get_os().'的'.get_broswer(),
             'log_time'=>date('Y-m-d H:i:s',time())
         ];
