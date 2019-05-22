@@ -32,12 +32,12 @@
   margin-left: -50px;
 }
 #cropedBigImg{
-    width: 70px;
-    height: 50px;
+    width: 40px;
+    height: 30px;
 }
 #cropedBigImg1{
-    width: 70px;
-    height: 50px;
+    width: 40px;
+    height: 30px;
 }
 </style>
 </head>
