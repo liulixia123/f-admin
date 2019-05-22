@@ -26,7 +26,7 @@
             <col class="hidden-xs" width="50">
             <col class="hidden-xs" width="80">
             <col>
-            <col class="hidden-xs" width="150">
+            <col class="hidden-xs" width="350">
             <col class="hidden-xs" width="150">
             <col width="200">
         </colgroup>
