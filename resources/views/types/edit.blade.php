@@ -187,14 +187,16 @@
     //本小插件支持移动端哦    
     //这里是初始化
     var item = parseInt($("#content").val()); 
-    for(var i=0;i<=item*2+10;i++){
-         $('.filter-box'+i).selectFilter({
-        callBack : function (val){
-            //返回选择的值
-            //console.log(val)
-        }
-    });
-    }  
+   
+    for(var i=0;i<item*2;i++){
+        $('.filter-box'+i).selectFilter({
+            callBack : function (val){
+                //返回选择的值
+                //console.log(val)
+            }
+        });
+    }
+      
      //选择图片后预览
      $('#chooseImage').on('change',function(){
         var filePath = $(this).val(),         //获取到input的value，里面是文件的路径
@@ -437,7 +439,6 @@
     //添加容量表单元素按钮处理
     function add(){
         var item = parseInt($("#content").val());
-        $("#content").val(item);
         var jishu = item*2+1;
         var oushu = item*2;
         $("#content").val(item+1);        

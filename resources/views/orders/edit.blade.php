@@ -21,7 +21,13 @@
     <div class="layui-form-item">
         <label class="layui-form-label">卡片容量:</label>
         <div class="layui-input-block">
-            <input type="text" value="{{$info['card_range'] or ''}}" name="type_name" required lay-verify="type_name" placeholder="请输入2-12位字母或汉字" autocomplete="off" class="layui-input">
+            <input type="text" value="{{$info['card_range'] or ''}}" name="type_name" required autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">所选游戏容量:</label>
+        <div class="layui-input-block">
+            <input type="text" value="{{$info['game_range'] or ''}}" name="game_range" required autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">

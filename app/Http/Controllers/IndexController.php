@@ -36,7 +36,7 @@ class IndexController extends Controller
         	foreach ($gameT as $key => $value) {
         	 $gameid[] = $value['game_id'];
 	        }
-	        $games = Game::get()->whereIn('id',$gameid)->toArray();
+	        $games = Game::get()->whereIn('id',$gameid)->where('status',1)->toArray();
 	        foreach ($games as $key => $value) {
 	        	$game[] = $value;
 	        }
@@ -87,7 +87,7 @@ class IndexController extends Controller
 			return ['code'=>1,'msg'=>trans('fzs.common.wrong')];
 		}
 		// 判断游戏id是否存在
-		$gamearr = Game::whereIn('id',$gameid)->get()->toArray();
+		$gamearr = Game::whereIn('id',$gameid)->where('status',1)->get()->toArray();
 		if(empty($gamearr)){
 			return ['code'=>1,'msg'=>trans('fzs.common.wrong')];
 		}
@@ -105,7 +105,7 @@ class IndexController extends Controller
 		$request = request()->all();
 		$gameid = $request['gameid'];
 		$gameidarr = explode(',', $gameid);
-		$gamearr = Game::whereIn('id',$gameidarr)->get()->toArray();
+		$gamearr = Game::whereIn('id',$gameidarr)->where('status',1)->get()->toArray();
 
 		return view('index.confirm',['gamearr'=>$gamearr]);
 	}
@@ -127,7 +127,12 @@ class IndexController extends Controller
 		$typeid = $typearr[0]['id'];
 		$type_name = $typearr[0]['type_name'];
 		
-		$gamearr = Game::whereIn('id',$gameid)->get()->toArray();
+		$danwei = substr($selcartype,strlen($selcartype)-2,2);
+		$size = substr($selcartype,0,strlen($selcartype)-2);
+		$cardmincap = getDanwei($size,$danwei);
+
+		$gamearr = Game::whereIn('id',$gameid)->where('status',1)->get()->toArray();
+		$game_total = 0;
 		foreach ($gamearr as $key => $value) {
 			$game['id'] = $value['id'];
 			$game['game_name'] = $value['game_name'];
@@ -135,11 +140,14 @@ class IndexController extends Controller
 			$game['language'] = $value['language'];
 			$game['number'] = $value['number'];
 			$game['danwei'] = $value['danwei'];
+			$game_total +=getDanwei($game['size_range'],$game['danwei']);
 			$games[] = $game;
 		}
 		$order['typeid'] = $typeid;
 		$order['type_name'] = $type_name;
 		$order['card_range'] = $selcartype;
+		$order['game_range'] = ($game_total/1000)."GB";
+		$order['remain_range'] = (($cardmincap-$game_total)/1000)."GB";
 		$order['games'] = $games;
 		$Model = new Order();
 		$Model->mobile = $mobile;

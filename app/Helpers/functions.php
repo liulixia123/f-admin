@@ -360,7 +360,19 @@ function putPV(){
             return true;
     }
 }
-
+/**
+ * 容量单位换算
+ */
+function getDanwei($size_range,$danwei){
+    if($danwei=="G"){
+      $size_range = $size_range*1000;
+    }else if($danwei=="T"){
+      $size_range = $size_range*1000*1000;
+    }else{
+      $size_range = $size_range;
+    }
+    return $size_range;
+  }
 /**
 *   将中文转成成英文的字符长度
 */
