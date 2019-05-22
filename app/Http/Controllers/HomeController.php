@@ -8,6 +8,7 @@
  */
 namespace App\Http\Controllers;
 use App\Models\Admin;
+use App\Models\Site;
 use Gregwar\Captcha\CaptchaBuilder;
 use Gregwar\Captcha\PhraseBuilder;
 use Illuminate\Http\Request;
@@ -39,7 +40,7 @@ class HomeController extends BaseController
      * 欢迎首页
      */
     public function welcome(){        
-        return view('admin.welcome',['sysinfo'=>$this->getSysInfo(),'orders_info'=>$this->getorderInfo()]);
+        return view('admin.welcome',['sysinfo'=>$this->getSysInfo(),'orders_info'=>$this->getorderInfo(),'contactInfo'=>$this->getContact()]);
     }
     /**
      * 排序
@@ -83,5 +84,12 @@ class HomeController extends BaseController
 
     public function getInfo(Request $request){
         return ['code'=>0,'orders_info'=>$this->getorderInfo()];
+    }
+    /**
+     * 获取联系我
+     */
+    public function getContact(){
+        $site = Site::get()->toArray();
+        return $site;
     }
 }

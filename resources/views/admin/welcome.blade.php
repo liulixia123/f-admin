@@ -87,8 +87,8 @@
             <div class="panel panel-default contact-panel">
                 <div class="panel-header">联系我</div>
                 <div class="panel-body">
-                    <p>QQ：1518545702</p>
-                    <p>E-mail:1518545702@qq.com</p>
+                    <p>QQ：{{$contactInfo[0]['qq']}}</p>
+                    <p>E-mail:{{$contactInfo[0]['email']}}</p>
                 </div>
             </div>
         </div>

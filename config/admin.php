@@ -50,6 +50,11 @@ return [
     'menu_table_parent_id_key'              => 'parent_id',
     'menu_table_cannot_manage_ids'          =>  '1,2,3,4,5,6,7',
 
+    //site
+    'site'                            => 'App\Models\Site',
+    'site_type_table'                       =>'admin_site',
+    'site_table_cannot_manage_ids'          => '0',
+
     'db_log'                                =>  env('DB_LOG', false),
     //cache
     'admin_permissions_for_role_id'           =>'ap_id',

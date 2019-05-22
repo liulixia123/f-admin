@@ -271,6 +271,37 @@ class DataService{
                         return ['status'=>0,'msg'=>trans('fzs.common.wrong')];
                 }
                 break;
+            case 'sites':
+                switch ($kind[1]){
+                    case 'add_or_update':                        
+                        $model->site_name = $inputs['site_name'];
+                        $model->qq = $inputs['qq'];
+                        $model->email = $inputs['email'];
+                        if($inputs['id']){
+                            if (is_config_id($inputs['id'], "admin.site_table_cannot_manage_ids", false))return ['status'=>0,'msg'=>trans('fzs.sites.notedit')];
+                            $model->exists = true;
+                            $model->id = $inputs['id'];
+                        }
+                        try{
+                            if (!$model->save()) {
+                                return ['status'=>0,'msg'=>trans('fzs.common.fail')];
+                            }
+                        }catch (\Exception $e){
+                            return ['status'=>0,'msg'=>trans('fzs.common.fail')];
+                        }
+                        return ['status'=>1,'msg'=>trans('fzs.common.success')];
+                        break;
+
+                    case 'delete':
+                        $model->id = $inputs['id'];
+                        $model->exists = true;
+                        if($model->delete())return ['status'=>1,'msg'=>trans('fzs.common.success')];
+                        else return ['status'=>0,'msg'=>trans('fzs.common.fail')];
+                        break;
+                    default:
+                        return ['status'=>0,'msg'=>trans('fzs.common.wrong')];
+                }
+                break;
             default:
                 return ['status'=>0,'msg'=>trans('fzs.common.wrong')];
         }

@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
     Route::post('/saveEdit/{type}',           'TypesController@saveEdit');
     Route::resource('/games',     'GamesController');
     Route::resource('/orders',     'OrdersController');
+    Route::resource('/site',     'SitesController');
 });
 //前台首页
 Route::get('/',                   'IndexController@index');

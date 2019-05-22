@@ -17,19 +17,20 @@
     <style type="text/css">
 .types_item {
   display: inline;
-  width: 16%;
+  width: 19%;
   height: 32px;
   position: absolute; 
-  padding-right: 15px; 
+  padding-right: 10px; 
 
 }
 .inputout{
-  width: 62%;
+  width: 61%;
   height:38px;
   padding: 5px;
   border: 1px solid #e6e6e6;
   margin-bottom: 5px;
-  margin-left: -50px;
+  margin-left: 10px;
+
 }
 #cropedBigImg{
     width: 40px;
@@ -88,7 +89,7 @@
         <tbody width="100%">
         @foreach($card_type as $k =>$list) 
          <tr class="firsttr">
-        <td  align="center" valign="middle" width="50%">
+        <td  valign="middle" width="50%">
             <input type="text" name="card_type[{{$k}}][min_capacity]" onkeyup="checkP(this);"  onpaste="checkP(this);"  oncut="checkP(this);"  ondrop="checkP(this);"  onchange="checkP(this);" id="min_id_{{$k}}" onblur="checkinput({{$k}})" class="inputout" value="{{$list['min_capacity'] or '' }}">             
             <div class="types_item">              
                 <div class="filter-box{{$k*2}}">
@@ -104,7 +105,7 @@
                 </div>                  
             </div>
         </td>
-        <td  align="center" valign="middle" width="50%">
+        <td  valign="middle" width="50%">
             <input type="text" name="card_type[{{$k}}][max_capacity]" onkeyup="checkP(this);"  onpaste="checkP(this);"  oncut="checkP(this);"  ondrop="checkP(this);"  onchange="checkP(this);" onblur="checkinput({{$k}})" id="max_id_{{$k}}" class="inputout" value="{{$list['max_capacity'] or '' }}">           
             <div class="types_item">              
                 <div class="filter-box{{$k*2+1}}">
@@ -332,7 +333,6 @@
     var row = document.createElement('tr');
     row.className ="firsttr"; 
     var td = document.createElement('td');      
-    td.align ="center";
     td.valign="middle";
     var tdinput = document.createElement('input');
         tdinput.setAttribute('type','text');
@@ -382,8 +382,7 @@
      td.appendChild(mindiv);
      row.appendChild(td);
      var rtd = document.createElement('td');      
-    rtd.align ="center";
-    rtd.valign="middle";
+        rtd.valign="middle";
     var rtdinput = document.createElement('input');
         rtdinput.setAttribute('type','text');
         rtdinput.setAttribute('id','max_id_'+item);

@@ -61,4 +61,10 @@ return [
         'del_game'             =>    '删除游戏',
         'handle_game'          =>    '操作游戏',
     ],
+    'sites' => [
+        'notdel'               =>    '该网站不可以删除',
+        'notedit'              =>    '该网站不可以编辑',
+        'del_sites'             =>    '删除信息',
+        'handle_sites'          =>    '操作网站基本信息',
+    ],
 ];

@@ -61,6 +61,10 @@ class OrdersController extends BaseController
         $orderlist = unserialize($info['info']);
         $info['type_name'] = $orderlist['type_name'];
         $info['card_range'] = $orderlist['card_range'];
+        if(empty($orderlist['game_range'])){
+            $orderlist['game_range'] = "0GB";
+        }
+        $info['game_range'] = $orderlist['game_range'];
         $gamelist = $orderlist['games'];
         return view('orders.edit', ['id'=>$id,'info'=>$info,'roles'=>Role::all(),'gamelist'=>$gamelist]);
     }
