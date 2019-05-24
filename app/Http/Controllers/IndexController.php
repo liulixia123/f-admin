@@ -117,32 +117,57 @@ class IndexController extends Controller
 		$type = $request['type'];//机型id
 		$selcartype = $request['selcartype'];//卡片容量
 		$gameid = $request['gameid'];//游戏id
+		if(empty($type)){
+			return ['code'=>1,'msg'=>trans('fzs.common.wrong')];
+		}
+		if(empty($selcartype)){
+			return ['code'=>1,'msg'=>trans('fzs.common.wrong')];
+		}
+		if(empty($mobile)){
+			return ['code'=>1,'msg'=>trans('fzs.common.wrong')];
+		}
+		if(empty($gameid)){
+			return ['code'=>1,'msg'=>trans('fzs.common.wrong')];
+		}
 		if(!checkMobile($mobile)){
 			return ['code'=>1,'msg'=>trans('fzs.common.wrong')];
 		}
+		
 		$typearr = Type::where('type_name',$type)->where('status',1)->get()->toArray();
 		if(empty($typearr)){
 			return ['code'=>2,'msg'=>trans('fzs.common.wrong')];
 		}
 		$typeid = $typearr[0]['id'];
 		$type_name = $typearr[0]['type_name'];
+
 		
 		$danwei = substr($selcartype,strlen($selcartype)-2,2);
 		$size = substr($selcartype,0,strlen($selcartype)-2);
+		if(!isFloat($size)){
+			return ['code'=>1,'msg'=>trans('fzs.common.wrong')];
+		}
+		if(!isDanwei($danwei)){
+			return ['code'=>1,'msg'=>trans('fzs.common.wrong')];
+		}
 		$cardmincap = getDanwei($size,$danwei);
 
 		$gamearr = Game::whereIn('id',$gameid)->where('status',1)->get()->toArray();
 		$game_total = 0;
-		foreach ($gamearr as $key => $value) {
-			$game['id'] = $value['id'];
-			$game['game_name'] = $value['game_name'];
-			$game['size_range'] = $value['size_range'];
-			$game['language'] = $value['language'];
-			$game['number'] = $value['number'];
-			$game['danwei'] = $value['danwei'];
-			$game_total +=getDanwei($game['size_range'],$game['danwei']);
-			$games[] = $game;
+		if($gamearr){
+			foreach ($gamearr as $key => $value) {
+				$game['id'] = $value['id'];
+				$game['game_name'] = $value['game_name'];
+				$game['size_range'] = $value['size_range'];
+				$game['language'] = $value['language'];
+				$game['number'] = $value['number'];
+				$game['danwei'] = $value['danwei'];
+				$game_total +=getDanwei($game['size_range'],$game['danwei']);
+				$games[] = $game;
+			}
+		}else{
+			$games = [];
 		}
+		
 		$order['typeid'] = $typeid;
 		$order['type_name'] = $type_name;
 		$order['card_range'] = $selcartype;
@@ -153,7 +178,13 @@ class IndexController extends Controller
 		$Model->mobile = $mobile;
 		$Model->order_num = getOrderNumer();
 		$Model->info = serialize($order);		
-		$Model->save();
+		try{
+            if (!$Model->save()) {
+                return ['status'=>1,'msg'=>trans('fzs.common.fail')];
+            }
+        }catch (\Exception $e){
+            return ['status'=>1,'msg'=>trans('fzs.common.fail')];
+        }
 		return ['code'=>0,'msg'=>trans('fzs.common.success')];
 	}
 }

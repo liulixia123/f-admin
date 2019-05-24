@@ -374,6 +374,29 @@ function getDanwei($size_range,$danwei){
     return $size_range;
   }
 /**
+* 判断是否是浮点数或整数
+*/
+function isFloat($num){
+    $isMatched = preg_match('/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/', $num, $matches);
+    if($isMatched){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+/**
+ * 判断单位是否正确
+ */
+function isDanwei($danwei){
+    $isMatched = preg_match('/(^GB)|(^TB)|(^MB)$)/', $danwei, $matches);
+    if($isMatched){
+        return true;
+    }else{
+        return false;
+    }
+}
+/**
 *   将中文转成成英文的字符长度
 */
 function getEnByCnByString($string, $length=10){
