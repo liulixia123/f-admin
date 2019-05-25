@@ -389,7 +389,7 @@ function isFloat($num){
  * 判断单位是否正确
  */
 function isDanwei($danwei){
-    $isMatched = preg_match('/(^GB)|(^TB)|(^MB)$)/', $danwei, $matches);
+    $isMatched = preg_match('/(^GB$)|(^TB$)|(^MB$)/', $danwei, $matches);
     if($isMatched){
         return true;
     }else{

@@ -100,16 +100,6 @@ class IndexController extends Controller
 		return ['code'=>0,'msg'=>trans('fzs.common.success')];
 	}
 
-	// 获取确认订单的页面
-	public function confirmOrder(){
-		$request = request()->all();
-		$gameid = $request['gameid'];
-		$gameidarr = explode(',', $gameid);
-		$gamearr = Game::whereIn('id',$gameidarr)->where('status',1)->get()->toArray();
-
-		return view('index.confirm',['gamearr'=>$gamearr]);
-	}
-
 	// 确认订单                
 	public function confirm(){
 		$request = request()->all();

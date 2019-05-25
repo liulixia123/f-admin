@@ -381,9 +381,9 @@ var sh,wh3,nowlocal;
             return false;
           }          
         });
-        $("#selrlsum").text(f/1000);
+        $("#selrlsum").text(f/1000+"GB");
         havecard = (cardsize-f)/1000;
-        $("#havecardrl").text(havecard);
+        $("#havecardrl").text(havecard+"GB");
   }
   //判断单位大小转换
   function getDanwei(size_range,danwei){
@@ -423,9 +423,9 @@ var sh,wh3,nowlocal;
           
           chk_value.push($(this).val());
     });
-    $("#selrlsum").text(f/1000);
+    $("#selrlsum").text(f/1000+"GB");
     havecard = (cardsize-f)/1000;
-    $("#havecardrl").text(havecard);
+    $("#havecardrl").text(havecard+"GB");
     //console.log(chk_value);
   }
 
@@ -540,9 +540,9 @@ var sh,wh3,nowlocal;
     $.post("{{url('/home/confirm')}}",{type:type,selcartype:card,mobile:mobile,gameid:gameid,_token:"{{ csrf_token() }}"},function(data){
       if(data['code']==0){
         layer.msg('已提交成功', {
-                  time: 30000, //20s后自动关闭
+                  time: 4000, //20s后自动关闭
                 });
-           setTimeout(window.location.href="{{url('/')}}",3000);
+           setTimeout(window.location.href="{{url('/')}}"+'?timestamp='+ new Date().getTime()+Math.random(),3000);
       }else if(data['code']==2){
         layer.msg('提交失败，所选游戏机型后台已删除请重新选择', {
                   time: 3000, //20s后自动关闭
