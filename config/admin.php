@@ -28,7 +28,7 @@ return [
     'permission_controller'                 => 'controllers',
     'permission_menu_table'                 => 'admin_permission_menu',
     'permission_foreign_key'                => 'permission_id',
-    'permission_table_cannot_manage_ids'    => '1,2,3,4,5,6,7,8,9',
+    'permission_table_cannot_manage_ids'    => '',
 
     //types
     'type'                                  => 'App\Models\Type',
