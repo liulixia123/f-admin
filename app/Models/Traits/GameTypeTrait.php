@@ -26,9 +26,9 @@ trait GameTypeTrait
     public function saveTypes($types)
     {
         if (!empty($types)) {
-            $this->types()->sync($types);
+            $this->types()->sync($types);//任何不在给定数组中的 IDs 将会从中介表中被删除。
         } else {
-            $this->types()->detach();
+            $this->types()->detach();//移除所有
         }
     }
 

@@ -6,7 +6,7 @@ use App\Models\Interfaces\GameTypeInterface;
 use App\Models\Traits\GameTypeTrait;
 class Game extends Model implements GameTypeInterface
 {
-	use GameTypeTrait;
+	use GameTypeTrait;//使用trait可以多继承
     protected $table = 'games';
     public function typeToIds()
     {
