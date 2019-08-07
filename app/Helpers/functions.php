@@ -397,6 +397,20 @@ function isDanwei($danwei){
     }
 }
 /**
+ * 获取函数执行时间
+ */
+function getFuncTime($func,$param_arr){
+    $start = microtime(true);
+    //第一个参数作为回调函数（callback）调用，把参数数组作（param_arr）为回调函数的的参数传入
+    //参数数组必须是索引数组
+    call_user_func_array($func, $param_arr);
+
+    $end = microtime(true);
+    $usedTime = bcsub($end, $start, 4);//毫秒数保留4位
+
+    return  $usedTime;
+}
+/**
 *   将中文转成成英文的字符长度
 */
 function getEnByCnByString($string, $length=10){
