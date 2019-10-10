@@ -28,8 +28,8 @@ function generateOperation($name){
     $file_path = __DIR__."/../../routes/web.php";
     $str = file_get_contents($file_path);
     if(strpos($str,$name)===false){
-        if(substr_count($name,'/')==1){
-            $controllername = substr($name,1);
+        if(strpos($name,'/')===0){
+            $controllername = trim($name,'/');
             $str = str_replace("SitesController');","SitesController');\r\n\tRoute::resource('".$name."',     '".$controllername."Controller');",$str);
             file_put_contents($file_path,$str);
             //生成控制器
