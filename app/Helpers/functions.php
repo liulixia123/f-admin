@@ -18,6 +18,23 @@ if (!function_exists('is_config_id')) {
         return in_array($id, $ids);
     }
 }
+function generateOperation($name){
+    //路由配置文件追加路由信息
+    $file_path = __DIR__."/../../routes/web.php";
+    $str = file_get_contents($file_path);
+    if(strpos($str,$name)===false){
+        $str = str_replace("SitesController');","SitesController');\r\n\tRoute::resource('".$name."',     '".$name."Controller');",$str);
+        file_put_contents($file_path,$str);
+        //生成控制器
+        /*php artisan make:controller UserController
+        php artisan make:model User
+        php artisan make:view pages.index*/
+        $exitcode = Artisan::call('make:controller UserController');
+    }else{
+        return false;
+    }
+    
+}
 /**
 * 验证容量是否规范
 */
